@@ -65,21 +65,52 @@
       font-size: 1.1rem;
       flex-shrink: 0;
     }
+
+    /* Selector de Idiomas */
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .lang-btn.active {
+      background: #fff;
+      color: var(--rr-navy);
+      border-color: #fff;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER INTEGRADO CON LA IMAGEN MAESTRA (LOGO + ASISTENTE) -->
+  <!-- HEADER INTEGRADO (SELECTOR DE IDIOMAS + TEXTO + IMAGEN) -->
   <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
-    <div style="max-width: 440px; margin: 0 auto; padding: 12px 12px 0;">
-      <img src="conserje-hero.jpg" alt="Conserje Digital Corujão & Rental Ready" style="width: 100%; height: auto; display: block; border-radius: 14px;">
-    </div>
-    <div style="background: linear-gradient(180deg, rgba(6,34,43,0.85) 0%, #0d1b2a 100%); padding: 14px 20px 20px; color: #fff;">
-      <h1 class="h5 mb-1 fw-bold">¡Bienvenido a tu Loft! 🌊</h1>
-      <p class="small text-white-50 mb-2">Lagoinha do Norte · Florianópolis</p>
-      <span class="badge bg-success bg-opacity-75" style="font-size: 0.75rem;">
-        <i class="bi bi-wifi-off"></i> Guía Inteligente Offline Activa
+    
+    <!-- Barra superior con selector de idioma -->
+    <div class="d-flex justify-content-between align-items-center px-3 pt-3" style="max-width: 440px; margin: 0 auto;">
+      <span class="badge bg-success bg-opacity-75" style="font-size: 0.72rem;">
+        <i class="bi bi-wifi-off"></i> <span data-i18n="badge_offline">Offline</span>
       </span>
+      <div class="d-flex gap-1">
+        <button onclick="setLanguage('es')" id="btn-es" class="lang-btn active">🇪🇸 ES</button>
+        <button onclick="setLanguage('pt')" id="btn-pt" class="lang-btn">🇧🇷 PT</button>
+        <button onclick="setLanguage('en')" id="btn-en" class="lang-btn">🇬🇧 EN</button>
+      </div>
+    </div>
+
+    <!-- Título de Bienvenida en Texto Vivo -->
+    <div class="pt-3 pb-1 px-3 text-white">
+      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! Soy tu Conserje Digital!</h2>
+      <p id="hero-sub" class="small text-white-50 mb-0">Lagoinha do Norte · Florianópolis</p>
+    </div>
+
+    <!-- Imagen Maestra (Asistente + Logos oficiales de Corujão y Rental Ready) -->
+    <div style="max-width: 440px; margin: 0 auto; padding: 6px 12px 14px;">
+      <img src="conserje-bg.jpg" onerror="this.src='badsn.jpg'" alt="Conserje Digital Residencial Corujão" style="width: 100%; height: auto; display: block; border-radius: 14px;">
     </div>
   </div>
 
@@ -88,10 +119,10 @@
     <!-- 1. MÓDULO CONEXIÓN WI-FI POR UNIDAD -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-router text-primary"></i> 1. Tu Conexión Wi-Fi Dedicada
+        <i class="bi bi-router text-primary"></i> <span data-i18n="wifi_title">1. Tu Conexión Wi-Fi Dedicada</span>
       </div>
       <div class="card-body-custom">
-        <label class="form-label small text-muted mb-2">Seleccioná tu contenedor o sector:</label>
+        <label data-i18n="wifi_select_label" class="form-label small text-muted mb-2">Seleccioná tu contenedor o sector:</label>
         <select id="unitSelect" class="form-select form-select-lg mb-3" onchange="updateWifi()" style="font-size: 0.95rem;">
           <option value="1">Kitnet 01 (Lagoinha do Norte)</option>
           <option value="2">Kitnet 02 (Brava)</option>
@@ -109,15 +140,15 @@
         </select>
 
         <div class="bg-light p-3 rounded-3 text-center border">
-          <span class="text-muted d-block small mb-1">Nombre de Red (SSID):</span>
+          <span data-i18n="wifi_ssid_label" class="text-muted d-block small mb-1">Nombre de Red (SSID):</span>
           <h5 id="wifiSsid" class="fw-bold text-primary mb-2">Lagoinha do Norte</h5>
-          <span class="text-muted d-block small mb-1">Contraseña:</span>
+          <span data-i18n="wifi_pass_label" class="text-muted d-block small mb-1">Contraseña:</span>
           <h5 id="wifiPass" class="fw-bold text-dark mb-3">corujao01</h5>
           <button class="btn btn-sm btn-outline-primary px-3 rounded-pill" onclick="copyWifi()">
-            <i class="bi bi-clipboard"></i> Copiar Contraseña
+            <i class="bi bi-clipboard"></i> <span data-i18n="wifi_btn_copy">Copiar Contraseña</span>
           </button>
         </div>
-        <p class="small text-muted mt-2 mb-0" style="font-size: 0.78rem;">
+        <p data-i18n="wifi_note" class="small text-muted mt-2 mb-0" style="font-size: 0.78rem;">
           <em>💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.</em>
         </p>
       </div>
@@ -128,8 +159,8 @@
       <div class="d-flex gap-3">
         <i class="bi bi-wind fs-3"></i>
         <div>
-          <h6 class="fw-bold mb-1">Cuidado con el Viento Sur</h6>
-          <p class="small mb-0">En días de tormenta o ráfagas fuertes, por favor mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire y filtraciones.</p>
+          <h6 data-i18n="wind_title" class="fw-bold mb-1">Cuidado con el Viento Sur</h6>
+          <p data-i18n="wind_desc" class="small mb-0">En días de tormenta o ráfagas fuertes, por favor mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire y filtraciones.</p>
         </div>
       </div>
     </div>
@@ -137,22 +168,22 @@
     <!-- 3. USO DE ARTEFACTOS E INSTALACIONES DEL LOFT -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-sliders text-primary"></i> 2. Uso del Loft y Equipamiento
+        <i class="bi bi-sliders text-primary"></i> <span data-i18n="equip_title">2. Uso del Loft y Equipamiento</span>
       </div>
       <div class="card-body-custom">
         <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-snow text-info"></i> Aire Acondicionado</h6>
-          <p class="small text-muted mb-0">Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.</p>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-snow text-info"></i> <span data-i18n="ac_title">Aire Acondicionado</span></h6>
+          <p data-i18n="ac_desc" class="small text-muted mb-0">Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.</p>
         </div>
         <hr class="my-2">
         <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> Ducha y Agua Caliente</h6>
-          <p class="small text-muted mb-0">Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.</p>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> <span data-i18n="shower_title">Ducha y Agua Caliente</span></h6>
+          <p data-i18n="shower_desc" class="small text-muted mb-0">Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.</p>
         </div>
         <hr class="my-2">
         <div>
-          <h6 class="fw-bold small mb-1"><i class="bi bi-umbrella text-warning"></i> Sillas y Sombrilla de Playa</h6>
-          <p class="small text-muted mb-0">Cada loft incluye sillas y sombrilla asignadas. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.</p>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-umbrella text-warning"></i> <span data-i18n="beach_title">Sillas y Sombrilla de Playa</span></h6>
+          <p data-i18n="beach_desc" class="small text-muted mb-0">Cada loft incluye sillas y sombrilla asignadas. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.</p>
         </div>
       </div>
     </div>
@@ -164,8 +195,8 @@
           <i class="bi bi-cup-straw"></i>
         </div>
         <div>
-          <h6 class="fw-bold mb-1">Beneficio Cooler de Playa</h6>
-          <p class="small text-muted mb-0">Consumiendo tus bebidas en el <strong>Minimercado Corujão</strong> (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
+          <h6 data-i18n="cooler_title" class="fw-bold mb-1">Beneficio Cooler de Playa</h6>
+          <p data-i18n="cooler_desc" class="small text-muted mb-0">Consumiendo tus bebidas en el <strong>Minimercado Corujão</strong> (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
         </div>
       </div>
     </div>
@@ -173,40 +204,40 @@
     <!-- 5. GUÍA LOCAL Y COMERCIOS DE CONFIANZA -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-geo-alt text-primary"></i> 3. Guía de Servicios Locales
+        <i class="bi bi-geo-alt text-primary"></i> <span data-i18n="guide_title">3. Guía de Servicios Locales</span>
       </div>
       <div class="card-body-custom">
         
         <div class="d-flex justify-content-between align-items-start mb-3">
           <div>
-            <h6 class="fw-bold small mb-0">🥖 Panadería "La Colmena"</h6>
-            <span class="small text-muted">A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs</span>
+            <h6 data-i18n="bakery_title" class="fw-bold small mb-0">🥖 Panadería "La Colmena"</h6>
+            <span data-i18n="bakery_desc" class="small text-muted">A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs</span>
           </div>
-          <span class="badge bg-light text-dark border">A pie</span>
+          <span data-i18n="badge_walk" class="badge bg-light text-dark border">A pie</span>
         </div>
 
         <div class="d-flex justify-content-between align-items-start mb-3">
           <div>
-            <h6 class="fw-bold small mb-0">🥩 Carnicería para Asados & Minimarket</h6>
-            <span class="small text-muted">Cortes para parrilla, carbón, hielo y bebidas a 50 metros.</span>
+            <h6 data-i18n="meat_title" class="fw-bold small mb-0">🥩 Carnicería & Minimarket</h6>
+            <span data-i18n="meat_desc" class="small text-muted">Cortes para asado, carbón, hielo y bebidas a 50 metros.</span>
           </div>
-          <span class="badge bg-light text-dark border">Vecino</span>
+          <span data-i18n="badge_near" class="badge bg-light text-dark border">Vecino</span>
         </div>
 
         <div class="d-flex justify-content-between align-items-start mb-3">
           <div>
-            <h6 class="fw-bold small mb-0">🍝 Restaurante Puny (Pastas & Grill)</h6>
-            <span class="small text-muted">A 2 km en auto. Mencioná que vas de Residencial Corujão.</span>
+            <h6 data-i18n="puny_title" class="fw-bold small mb-0">🍝 Restaurante Puny (Pastas & Grill)</h6>
+            <span data-i18n="puny_desc" class="small text-muted">A 2 km en auto. Mencioná que vas de Residencial Corujão.</span>
           </div>
           <span class="badge-discount">-10% OFF</span>
         </div>
 
         <div class="d-flex justify-content-between align-items-start">
           <div>
-            <h6 class="fw-bold small mb-0">🚌 Transporte al Centro de Florianópolis</h6>
-            <span class="small text-muted">Parada a 80 metros. Línea 1122 Executivo Praia Brava directo al centro.</span>
+            <h6 data-i18n="bus_title" class="fw-bold small mb-0">🚌 Transporte al Centro de Florianópolis</h6>
+            <span data-i18n="bus_desc" class="small text-muted">Parada a 80 metros. Línea 1122 Executivo Praia Brava directo al centro.</span>
           </div>
-          <span class="badge bg-light text-dark border">En puerta</span>
+          <span data-i18n="badge_door" class="badge bg-light text-dark border">En puerta</span>
         </div>
 
       </div>
@@ -215,31 +246,31 @@
     <!-- 6. NORMAS DE CONVIVENCIA Y COEXISTENCIA -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-shield-lock text-primary"></i> 4. Normas de Convivencia
+        <i class="bi bi-shield-lock text-primary"></i> <span data-i18n="rules_title">4. Normas de Convivencia</span>
       </div>
       <div class="card-body-custom small text-muted">
         <ul class="mb-0 ps-3">
-          <li class="mb-2"><strong>Horario de Silencio:</strong> 22:00 a 08:00 hs. Respetamos el descanso de todas las familias.</li>
-          <li class="mb-2"><strong>Espacio Libre de Humo:</strong> Prohibido fumar dentro de los contenedores.</li>
-          <li class="mb-2"><strong>Cocheras:</strong> 1 vehículo asignado por loft en el sector delimitado.</li>
-          <li><strong>Mascotas:</strong> Circular siempre con correa en áreas comunes y recoger sus necesidades.</li>
+          <li class="mb-2"><strong data-i18n="r1_t">Horario de Silencio:</strong> <span data-i18n="r1_d">22:00 a 08:00 hs. Respetamos el descanso de todas las familias.</span></li>
+          <li class="mb-2"><strong data-i18n="r2_t">Espacio Libre de Humo:</strong> <span data-i18n="r2_d">Prohibido fumar dentro de los contenedores.</span></li>
+          <li class="mb-2"><strong data-i18n="r3_t">Cocheras:</strong> <span data-i18n="r3_d">1 vehículo asignado por loft en el sector delimitado.</span></li>
+          <li><strong data-i18n="r4_t">Mascotas:</strong> <span data-i18n="r4_d">Circular siempre con correa en áreas comunes y recoger sus necesidades.</span></li>
         </ul>
       </div>
     </div>
 
     <!-- 7. PROTOCOLO DE URGENCIAS Y SALUD -->
     <div class="card card-custom p-3 bg-light border">
-      <h6 class="fw-bold small mb-2"><i class="bi bi-telephone-plus text-danger"></i> Teléfonos Útiles y Emergencias</h6>
+      <h6 class="fw-bold small mb-2"><i class="bi bi-telephone-plus text-danger"></i> <span data-i18n="emerg_title">Teléfonos Útiles y Emergencias</span></h6>
       <div class="d-flex justify-content-between small text-muted">
-        <span>UPA Norte (Canasvieiras):</span>
+        <span data-i18n="emerg_upa">UPA Norte (Canasvieiras):</span>
         <span class="fw-bold">192 (SAMU)</span>
       </div>
       <div class="d-flex justify-content-between small text-muted mt-1">
-        <span>Policía Militar:</span>
+        <span data-i18n="emerg_police">Policía Militar:</span>
         <span class="fw-bold">190</span>
       </div>
       <div class="d-flex justify-content-between small text-muted mt-1">
-        <span>Bomberos:</span>
+        <span data-i18n="emerg_fire">Bomberos:</span>
         <span class="fw-bold">193</span>
       </div>
     </div>
@@ -247,39 +278,39 @@
     <!-- 8. CHECKLIST DE SALIDA (CHECK-OUT) -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-check2-circle text-primary"></i> 5. Checklist de Salida (Hasta las 10:00 hs)
+        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_title">5. Checklist de Salida (Hasta las 10:00 hs)</span>
       </div>
       <div class="card-body-custom">
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c1">
-          <label class="form-check-label small" for="c1">Aire acondicionado y luces apagadas</label>
+          <label class="form-check-label small" for="c1" data-i18n="chk_1">Aire acondicionado y luces apagadas</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c2">
-          <label class="form-check-label small" for="c2">Canillas cerradas y ducha sin gotear</label>
+          <label class="form-check-label small" for="c2" data-i18n="chk_2">Canillas cerradas y ducha sin gotear</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c3">
-          <label class="form-check-label small" for="c3">Basura retirada y depositada en cesto exterior</label>
+          <label class="form-check-label small" for="c3" data-i18n="chk_3">Basura retirada y depositada en cesto exterior</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c4">
-          <label class="form-check-label small" for="c4">Cuentas de Netflix / Streaming deslogueadas de la TV</label>
+          <label class="form-check-label small" for="c4" data-i18n="chk_4">Cuentas de Netflix / Streaming deslogueadas de la TV</label>
         </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" id="c5">
-          <label class="form-check-label small" for="c5">Llaves dejadas sobre la mesa o entregadas al anfitrión</label>
+          <label class="form-check-label small" for="c5" data-i18n="chk_5">Llaves dejadas sobre la mesa o entregadas al anfitrión</label>
         </div>
       </div>
     </div>
 
     <!-- 9. CONTACTO Y ASISTENCIA DIRECTA WHATSAPP -->
     <div class="card card-custom p-3 text-center border-0 shadow-sm">
-      <span class="small text-muted mb-2 d-block">¿Necesitás comunicarte con los anfitriones del predio?</span>
+      <span class="small text-muted mb-2 d-block" data-i18n="wa_prompt">¿Necesitás comunicarte con los anfitriones del predio?</span>
       <button onclick="abrirWhatsApp()" class="btn btn-action py-2 px-4">
-        <i class="bi bi-whatsapp"></i> Hablar con el Anfitrión
+        <i class="bi bi-whatsapp"></i> <span data-i18n="wa_btn">Hablar con el Anfitrión</span>
       </button>
-      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;">
+      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;" data-i18n="wa_hosts">
         Atención presencial: Martín, María, Juan Martín y Marcos
       </span>
     </div>
@@ -287,15 +318,200 @@
     <!-- FOOTER INSTITUCIONAL -->
     <div class="text-center mt-4">
       <p class="text-muted mb-0" style="font-size: 0.75rem;">
-        Infraestructura Operativa y Digital provista por <strong>Rental Ready</strong><br>
-        <em>Menos confusión. Más control.</em>
+        <span data-i18n="footer_text">Infraestructura Operativa y Digital provista por</span> <strong>Rental Ready</strong><br>
+        <em data-i18n="footer_sub">Menos confusión. Más control.</em>
       </p>
     </div>
 
   </div>
 
-  <!-- JAVASCRIPT DINÁMICO & CONEXIONES -->
+  <!-- DICCIONARIO TRILINGÜE & LÓGICA -->
   <script>
+    let currentLang = 'es';
+
+    const translations = {
+      es: {
+        hero_t: "¡Hola! Soy tu Conserje Digital!",
+        hero_s: "Lagoinha do Norte · Florianópolis",
+        badge_offline: "Guía Inteligente Offline",
+        wifi_title: "1. Tu Conexión Wi-Fi Dedicada",
+        wifi_select_label: "Seleccioná tu contenedor o sector:",
+        wifi_ssid_label: "Nombre de Red (SSID):",
+        wifi_pass_label: "Contraseña:",
+        wifi_btn_copy: "Copiar Contraseña",
+        wifi_copied: "Contraseña copiada al portapapeles: ",
+        wifi_note: "💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.",
+        wind_title: "Cuidado con el Viento Sur",
+        wind_desc: "En días de tormenta o ráfagas fuertes, por favor mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire y filtraciones.",
+        equip_title: "2. Uso del Loft y Equipamiento",
+        ac_title: "Aire Acondicionado",
+        ac_desc: "Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.",
+        shower_title: "Ducha y Agua Caliente",
+        shower_desc: "Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.",
+        beach_title: "Sillas y Sombrilla de Playa",
+        beach_desc: "Cada loft incluye sillas y sombrilla asignadas. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.",
+        cooler_title: "Beneficio Cooler de Playa",
+        cooler_desc: "Consumiendo tus bebidas en el Minimercado Corujão (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.",
+        guide_title: "3. Guía de Servicios Locales",
+        bakery_title: "🥖 Panadería 'La Colmena'",
+        bakery_desc: "A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs",
+        meat_title: "🥩 Carnicería & Minimarket",
+        meat_desc: "Cortes para asado, carbón, hielo y bebidas a 50 metros.",
+        puny_title: "🍝 Restaurante Puny (Pastas & Grill)",
+        puny_desc: "A 2 km en auto. Mencioná que vas de Residencial Corujão.",
+        bus_title: "🚌 Transporte al Centro de Florianópolis",
+        bus_desc: "Parada a 80 metros. Línea 1122 Executivo Praia Brava directo al centro.",
+        badge_walk: "A pie",
+        badge_near: "Vecino",
+        badge_door: "En puerta",
+        rules_title: "4. Normas de Convivencia",
+        r1_t: "Horario de Silencio:",
+        r1_d: "22:00 a 08:00 hs. Respetamos el descanso de todas las familias.",
+        r2_t: "Espacio Libre de Humo:",
+        r2_d: "Prohibido fumar dentro de los contenedores.",
+        r3_t: "Cocheras:",
+        r3_d: "1 vehículo asignado por loft en el sector delimitado.",
+        r4_t: "Mascotas:",
+        r4_d: "Circular siempre con correa en áreas comunes y recoger sus necesidades.",
+        emerg_title: "Teléfonos Útiles y Emergencias",
+        emerg_upa: "UPA Norte (Canasvieiras):",
+        emerg_police: "Policía Militar:",
+        emerg_fire: "Bomberos:",
+        chk_title: "5. Checklist de Salida (Hasta las 10:00 hs)",
+        chk_1: "Aire acondicionado y luces apagadas",
+        chk_2: "Canillas cerradas y ducha sin gotear",
+        chk_3: "Basura retirada y depositada en cesto exterior",
+        chk_4: "Cuentas de Netflix / Streaming deslogueadas de la TV",
+        chk_5: "Llaves dejadas sobre la mesa o entregadas al anfitrión",
+        wa_prompt: "¿Necesitás comunicarte con los anfitriones del predio?",
+        wa_btn: "Hablar con el Anfitrión",
+        wa_hosts: "Atención presencial: Martín, María, Juan Martín y Marcos",
+        footer_text: "Infraestructura Operativa y Digital provista por",
+        footer_sub: "Menos confusión. Más control.",
+        wa_msg: "¡Hola! Me comunico desde el Conserje Digital de Residencial Corujão ("
+      },
+      pt: {
+        hero_t: "Olá! Sou seu Concierge Digital!",
+        hero_s: "Lagoinha do Norte · Florianópolis",
+        badge_offline: "Guia Inteligente Offline",
+        wifi_title: "1. Sua Conexão Wi-Fi Dedicada",
+        wifi_select_label: "Selecione seu contêiner ou setor:",
+        wifi_ssid_label: "Nome da Rede (SSID):",
+        wifi_pass_label: "Senha:",
+        wifi_btn_copy: "Copiar Senha",
+        wifi_copied: "Senha copiada para a área de transferência: ",
+        wifi_note: "💡 A estrutura de contêiner marítimo conta com excelente isolamento termoacústico; cada loft possui seu próprio roteador para máxima velocidade de fibra óptica.",
+        wind_title: "Atenção com o Vento Sul",
+        wind_desc: "Em dias de chuva ou vento forte, por favor mantenha a janela do banheiro e a porta principal fechadas para evitar correntes de ar e respingos.",
+        equip_title: "2. Uso do Loft e Equipamentos",
+        ac_title: "Ar-Condicionado",
+        ac_desc: "Utilizar com portas e janelas fechadas. Ao sair para a praia, desligue para economizar energia e evitar sobrecargas.",
+        shower_title: "Chuveiro e Água Quente",
+        shower_desc: "Seletor de temperatura direto no chuveiro. No pátio temos chuveirão externo frio para retirar a areia antes de entrar no loft.",
+        beach_title: "Cadeiras e Guarda-Sol de Praia",
+        beach_desc: "Cada loft conta com cadeiras e guarda-sol designados. Ao retornar da praia, enxágue na torneira externa e guarde no seu espaço.",
+        cooler_title: "Benefício Caixa Térmica / Cooler",
+        cooler_desc: "Comprando suas bebidas no Minimercado Corujão (a 30 m), você pode pedir uma caixa térmica/cooler emprestada sem custo para levar à praia.",
+        guide_title: "3. Guia de Serviços Locais",
+        bakery_title: "🥖 Padaria 'La Colmena'",
+        bakery_desc: "A 3 quadras a pé · Pão quente a partir das 08:00 hs",
+        meat_title: "🥩 Casa de Carnes & Minimercado",
+        meat_desc: "Carnes para churrasco, carvão, gelo e bebidas a 50 metros.",
+        puny_title: "🍝 Restaurante Puny (Massas & Grelhados)",
+        puny_desc: "A 2 km de carro. Mencione que você está hospedado no Corujão.",
+        bus_title: "🚌 Transporte para o Centro de Florianópolis",
+        bus_desc: "Ponto a 80 metros. Linha 1122 Executivo Praia Brava direto ao centro.",
+        badge_walk: "A pé",
+        badge_near: "Vizinho",
+        badge_door: "Na porta",
+        rules_title: "4. Regras de Convivência",
+        r1_t: "Horário de Silêncio:",
+        r1_d: "22:00 às 08:00 hs. Respeitamos o descanso de todas as famílias.",
+        r2_t: "Ambiente Livre de Cigarro:",
+        r2_d: "Estritamente proibido fumar dentro dos lofts/contêineres.",
+        r3_t: "Estacionamento:",
+        r3_d: "1 veículo por loft na vaga delimitada.",
+        r4_t: "Animais de Estimação:",
+        r4_d: "Circular sempre com coleira nas áreas comuns e recolher os dejetos.",
+        emerg_title: "Telefones Úteis e Emergências",
+        emerg_upa: "UPA Norte (Canasvieiras):",
+        emerg_police: "Polícia Militar:",
+        emerg_fire: "Bombeiros:",
+        chk_title: "5. Checklist de Saída (Até as 10:00 hs)",
+        chk_1: "Ar-condicionado e luzes desligados",
+        chk_2: "Torneiras fechadas e chuveiro sem pingar",
+        chk_3: "Lixo retirado e depositado na lixeira externa",
+        chk_4: "Contas de streaming/Netflix desconectadas da Smart TV",
+        chk_5: "Chaves deixadas sobre a mesa ou entregues ao anfitrião",
+        wa_prompt: "Precisa falar com os anfitriões do espaço?",
+        wa_btn: "Falar com o Anfitrião",
+        wa_hosts: "Atendimento presencial: Martín, María, Juan Martín e Marcos",
+        footer_text: "Infraestrutura Operacional e Digital fornecida por",
+        footer_sub: "Menos confusão. Mais controle.",
+        wa_msg: "Olá! Estou entrando em contato através do Concierge Digital do Residencial Corujão ("
+      },
+      en: {
+        hero_t: "Hello! I'm your Digital Concierge!",
+        hero_s: "Lagoinha do Norte · Florianópolis",
+        badge_offline: "Offline Smart Guide",
+        wifi_title: "1. Your Dedicated Wi-Fi Connection",
+        wifi_select_label: "Select your container or area:",
+        wifi_ssid_label: "Network Name (SSID):",
+        wifi_pass_label: "Password:",
+        wifi_btn_copy: "Copy Password",
+        wifi_copied: "Password copied to clipboard: ",
+        wifi_note: "💡 Container architecture offers outstanding thermal and acoustic insulation; each loft features its own router for maximum fiber-optic speed.",
+        wind_title: "South Wind Advisory",
+        wind_desc: "During storms or strong gusts, please keep bathroom windows and front doors shut to prevent slamming and water ingress.",
+        equip_title: "2. Loft Amenities & Equipment",
+        ac_title: "Air Conditioning",
+        ac_desc: "Use with doors and windows closed. Please turn it off when heading to the beach to save energy and prevent overload.",
+        shower_title: "Electric Shower & Hot Water",
+        shower_desc: "Direct temperature switch on the shower unit. An outdoor cold shower is available in the yard to rinse off sand before entering.",
+        beach_title: "Beach Chairs & Umbrella",
+        beach_desc: "Each loft includes assigned beach gear. Please rinse them with the outdoor tap when returning from the beach.",
+        cooler_title: "Beach Cooler Courtesy",
+        cooler_desc: "When purchasing drinks at Minimercado Corujão (30m away), you can borrow an ice cooler free of charge for the beach.",
+        guide_title: "3. Local Guide & Trusted Spots",
+        bakery_title: "🥖 'La Colmena' Bakery",
+        bakery_desc: "3 blocks away on foot · Fresh warm bread starting at 8:00 AM",
+        meat_title: "🥩 Butcher Shop & Market",
+        meat_desc: "BBQ cuts, charcoal, ice, and cold beverages just 50 meters away.",
+        puny_title: "🍝 Puny Restaurant (Pasta & Grill)",
+        puny_desc: "2 km by car. Mention you are staying at Residencial Corujão.",
+        bus_title: "🚌 Transit to Downtown Florianópolis",
+        bus_desc: "Bus stop 80 meters away. Line 1122 Executivo Praia Brava straight to downtown.",
+        badge_walk: "Walking",
+        badge_near: "Next door",
+        badge_door: "On site",
+        rules_title: "4. House Rules",
+        r1_t: "Quiet Hours:",
+        r1_d: "10:00 PM to 08:00 AM. We respect peaceful rest for all families.",
+        r2_t: "Smoke-Free Space:",
+        r2_d: "Strictly non-smoking inside the container lofts.",
+        r3_t: "Parking:",
+        r3_d: "1 designated vehicle spot per loft in marked areas.",
+        r4_t: "Pets:",
+        r4_d: "Always keep pets on a leash in common areas and clean up after them.",
+        emerg_title: "Emergency & Medical Numbers",
+        emerg_upa: "North Emergency Room (UPA Canasvieiras):",
+        emerg_police: "Police Department:",
+        emerg_fire: "Firefighters / Rescue:",
+        chk_title: "5. Check-out Checklist (By 10:00 AM)",
+        chk_1: "A/C and lights switched off",
+        chk_2: "Faucets turned off and shower not dripping",
+        chk_3: "Trash taken out to exterior bins",
+        chk_4: "Logged out of personal Netflix / Streaming accounts on TV",
+        chk_5: "Keys left on the table or handed to hosts",
+        wa_prompt: "Need to contact the on-site hosts?",
+        wa_btn: "Message the Host",
+        wa_hosts: "On-site team: Martín, María, Juan Martín & Marcos",
+        footer_text: "Digital & Operational Infrastructure powered by",
+        footer_sub: "Less confusion. More control.",
+        wa_msg: "Hello! I'm contacting you from the Digital Concierge at Residencial Corujão ("
+      }
+    };
+
     const wifiData = {
       "1": { ssid: "Lagoinha do Norte", pass: "corujao01" },
       "2": { ssid: "Brava", pass: "corujao02" },
@@ -321,18 +537,52 @@
     function copyWifi() {
       const pass = document.getElementById("wifiPass").innerText;
       navigator.clipboard.writeText(pass);
-      alert("Contraseña copiada al portapapeles: " + pass);
+      alert(translations[currentLang].wifi_copied + pass);
     }
 
-    // Apertura limpia de WhatsApp hacia tu teléfono sin errores 404
+    function setLanguage(lang) {
+      currentLang = lang;
+      
+      // Actualizar botones de idioma
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-' + lang);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      // Actualizar título y subtítulo hero
+      document.getElementById('hero-title').innerText = translations[lang].hero_t;
+      document.getElementById('hero-sub').innerText = translations[lang].hero_s;
+
+      // Actualizar todos los elementos con data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+    }
+
+    // Apertura limpia de WhatsApp con mensaje en el idioma activo
     function abrirWhatsApp() {
       const tel = "5492235678263";
       const u = document.getElementById("unitSelect").options[document.getElementById("unitSelect").selectedIndex].text;
-      const msj = encodeURIComponent("¡Hola! Me comunico desde el Conserje Digital de Residencial Corujão (" + u + ").");
+      const msj = encodeURIComponent(translations[currentLang].wa_msg + u + ").");
       window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
     }
 
-    // Registro de Service Worker para soporte Offline
+    // Detección automática al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      const userLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      if (userLang.startsWith('pt')) {
+        setLanguage('pt');
+      } else if (userLang.startsWith('en')) {
+        setLanguage('en');
+      } else {
+        setLanguage('es');
+      }
+      updateWifi();
+    });
+
+    // Soporte Offline PWA
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');
     }
