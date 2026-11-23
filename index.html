@@ -16,44 +16,8 @@
       --rr-bg: #f4f6f9;
       --rr-text: #1c2d42;
     }
-    body { background-color: var(--rr-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--rr-text); padding-bottom: 40px; }
+    body { background-color: var(--rr-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--rr-text); padding-bottom: 40px; margin: 0; }
     
-    /* Header Institucional */
-    .header-box {
-      background: linear-gradient(135deg, var(--rr-navy) 0%, var(--rr-blue) 100%);
-      color: #fff;
-      padding: 24px 20px 20px;
-      border-bottom-left-radius: 24px;
-      border-bottom-right-radius: 24px;
-      box-shadow: 0 4px 16px rgba(13, 27, 42, 0.15);
-    }
-    .brand-logos {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .badge-rr {
-      background: rgba(0, 180, 216, 0.2);
-      color: var(--rr-accent);
-      border: 1px solid var(--rr-accent);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 12px;
-    }
-    .concierge-avatar {
-      width: 72px;
-      height: 72px;
-      background: #fff;
-      border: 3px solid var(--rr-accent);
-      border-radius: 50%;
-      padding: 4px;
-      margin: 0 auto 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    /* Tarjetas y Módulos */
     .card-custom {
       border: none;
       border-radius: 16px;
@@ -76,14 +40,17 @@
     .card-body-custom { padding: 16px 18px; }
     
     .btn-action {
-      background-color: var(--rr-cyan);
+      background-color: #25d366;
       color: #fff;
       border-radius: 12px;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
       text-decoration: none;
+      display: inline-block;
       transition: 0.2s;
     }
-    .btn-action:hover { background-color: #005f92; color: #fff; }
+    .btn-action:hover { background-color: #1eb956; color: #fff; }
     .alert-wind { background-color: #fff8e1; border-left: 5px solid #ffb703; color: #78350f; }
     .badge-discount { background-color: #e63946; color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; }
     .icon-circle {
@@ -102,14 +69,12 @@
 </head>
 <body>
 
-  <!-- HEADER INSTITUCIONAL -->
-  <div> <div> <div> <span>RESIDENCIAL CORUJÃO</span> <span><i></i> RENTAL READY</span> </div>   <h1>¡Bienvenido a tu Loft! 🌊</h1> <p>Lagoinha do Norte · Florianópolis</p> <span> <i></i> Guía Inteligente Offline Activa </span> </div> </div>
-
-      <!-- ASISTENTE VIRTUAL (ROBOT BRÚJULA CON CAMISA HAWAIANA) -->
-      <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80" 
-           onerror="this.src='https://cdn-icons-png.flaticon.com/512/4712/4712109.png'" 
-           alt="Asistente Virtual" class="concierge-avatar">
-      
+  <!-- HEADER INTEGRADO CON LA IMAGEN MAESTRA (LOGO + ASISTENTE) -->
+  <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
+    <div style="max-width: 440px; margin: 0 auto; padding: 12px 12px 0;">
+      <img src="badsn.jpg" alt="Conserje Digital Corujão & Rental Ready" style="width: 100%; height: auto; display: block; border-radius: 14px;">
+    </div>
+    <div style="background: linear-gradient(180deg, rgba(6,34,43,0.85) 0%, #0d1b2a 100%); padding: 14px 20px 20px; color: #fff;">
       <h1 class="h5 mb-1 fw-bold">¡Bienvenido a tu Loft! 🌊</h1>
       <p class="small text-white-50 mb-2">Lagoinha do Norte · Florianópolis</p>
       <span class="badge bg-success bg-opacity-75" style="font-size: 0.75rem;">
@@ -153,7 +118,7 @@
           </button>
         </div>
         <p class="small text-muted mt-2 mb-0" style="font-size: 0.78rem;">
-          <em>💡 La estructura de contenedor blindado garantiza excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.</em>
+          <em>💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.</em>
         </p>
       </div>
     </div>
@@ -182,7 +147,7 @@
         <hr class="my-2">
         <div class="mb-3">
           <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> Ducha y Agua Caliente</h6>
-          <p class="small text-muted mb-0">Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de entrar al contenedor.</p>
+          <p class="small text-muted mb-0">Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.</p>
         </div>
         <hr class="my-2">
         <div>
@@ -200,7 +165,7 @@
         </div>
         <div>
           <h6 class="fw-bold mb-1">Beneficio Cooler de Playa</h6>
-          <p class="small text-muted mb-0">Comprando tus bebidas en el <strong>Minimercado Corujão</strong> (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
+          <p class="small text-muted mb-0">Consumiendo tus bebidas en el <strong>Minimercado Corujão</strong> (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
         </div>
       </div>
     </div>
@@ -311,16 +276,15 @@
     <!-- 9. CONTACTO Y ASISTENCIA DIRECTA WHATSAPP -->
     <div class="card card-custom p-3 text-center border-0 shadow-sm">
       <span class="small text-muted mb-2 d-block">¿Necesitás comunicarte con los anfitriones del predio?</span>
-      <a href="https://wa.me/5492235678263" 
-         class="btn btn-action py-2 px-4 d-inline-block" target="_blank">
+      <button onclick="abrirWhatsApp()" class="btn btn-action py-2 px-4">
         <i class="bi bi-whatsapp"></i> Hablar con el Anfitrión
-      </a>
+      </button>
       <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;">
         Atención presencial: Martín, María, Juan Martín y Marcos
       </span>
     </div>
 
-    <!-- FOOTER INSTITUCIONAL DISCRETO -->
+    <!-- FOOTER INSTITUCIONAL -->
     <div class="text-center mt-4">
       <p class="text-muted mb-0" style="font-size: 0.75rem;">
         Infraestructura Operativa y Digital provista por <strong>Rental Ready</strong><br>
@@ -330,7 +294,7 @@
 
   </div>
 
-  <!-- SCRIPT DINÁMICO & SERVICE WORKER -->
+  <!-- JAVASCRIPT DINÁMICO & CONEXIONES -->
   <script>
     const wifiData = {
       "1": { ssid: "Lagoinha do Norte", pass: "corujao01" },
@@ -360,6 +324,15 @@
       alert("Contraseña copiada al portapapeles: " + pass);
     }
 
+    // Apertura limpia de WhatsApp hacia tu teléfono sin errores 404
+    function abrirWhatsApp() {
+      const tel = "5492235678263";
+      const u = document.getElementById("unitSelect").options[document.getElementById("unitSelect").selectedIndex].text;
+      const msj = encodeURIComponent("¡Hola! Me comunico desde el Conserje Digital de Residencial Corujão (" + u + ").");
+      window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
+    }
+
+    // Registro de Service Worker para soporte Offline
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js');
     }
