@@ -51,7 +51,6 @@
       transition: 0.2s;
     }
     .btn-action:hover { background-color: #1eb956; color: #fff; }
-    .badge-discount { background-color: #e63946; color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; }
     
     /* Módulo Clima */
     .weather-card {
@@ -63,7 +62,6 @@
       box-shadow: 0 4px 12px rgba(0, 119, 182, 0.2);
     }
     .weather-temp { font-size: 2.2rem; font-weight: 800; line-height: 1; }
-    .alert-wind-sub { background: rgba(255, 255, 255, 0.15); border-left: 4px solid #ffb703; border-radius: 8px; padding: 10px 12px; margin-top: 12px; font-size: 0.82rem; }
 
     /* Selector de Idiomas */
     .lang-btn {
@@ -82,14 +80,26 @@
       color: var(--rr-navy);
       border-color: #fff;
     }
+    .icon-circle {
+      width: 36px;
+      height: 36px;
+      background: #e0f2fe;
+      color: var(--rr-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER INTEGRADO -->
+  <!-- HEADER INTEGRADO (SELECTOR DE IDIOMAS + TEXTO + IMAGEN) -->
   <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
     
-    <!-- Selector de idioma -->
+    <!-- Barra superior con selector de idioma -->
     <div class="d-flex justify-content-between align-items-center px-3 pt-3" style="max-width: 440px; margin: 0 auto;">
       <span class="badge bg-success bg-opacity-75" style="font-size: 0.72rem;">
         <i class="bi bi-wifi-off"></i> <span data-i18n="badge_offline">Offline</span>
@@ -101,7 +111,7 @@
       </div>
     </div>
 
-    <!-- Título de Bienvenida Vivo -->
+    <!-- Título de Bienvenida en Texto Vivo -->
     <div class="pt-3 pb-1 px-3 text-white">
       <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! Soy tu Conserje Digital!</h2>
       <p id="hero-sub" class="small text-white-50 mb-0">Lagoinha do Norte · Florianópolis</p>
@@ -153,7 +163,7 @@
       </div>
     </div>
 
-    <!-- 2. MÓDULO CLIMA EN VIVO & ALERTA VIENTO SUR (ESTILO WEATHER CHANNEL) -->
+    <!-- 2. MÓDULO CLIMA EN VIVO (SIN VIENTO SUR) -->
     <div class="weather-card">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div>
@@ -167,13 +177,7 @@
 
       <div class="d-flex align-items-baseline gap-3 my-1">
         <span class="weather-temp" id="weather-temp">26°C</span>
-        <span class="small text-white-50" id="weather-wind">Viento: 14 km/h S</span>
-      </div>
-
-      <!-- Alerta Preventiva Integrada -->
-      <div class="alert-wind-sub">
-        <strong data-i18n="wind_alert_t">⚠️ Cuidado con el Viento Sur:</strong> 
-        <span data-i18n="wind_alert_d">En días de tormenta o viento sur fuerte, mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire o filtraciones.</span>
+        <span class="small text-white-50" id="weather-wind">Viento: 12 km/h</span>
       </div>
     </div>
 
@@ -255,20 +259,27 @@
       </div>
     </div>
 
-    <!-- 6. PROTOCOLO DE EMERGENCIAS Y DEFENSA CIVIL -->
+    <!-- 6. PROTOCOLO DE ALERTAS, ESTADO DEL AGUA Y DEFENSA CIVIL -->
     <div class="card card-custom p-3 bg-light border">
       <div class="d-flex justify-content-between align-items-center mb-2">
-        <h6 class="fw-bold small mb-0"><i class="bi bi-shield-exclamation text-danger"></i> <span data-i18n="emerg_title">Alertas y Defensa Civil</span></h6>
-        <a href="[suspicious link removed]" target="_blank" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 0.72rem;">
-          <i class="bi bi-radar"></i> Radar Defesa Civil SC
-        </a>
+        <h6 class="fw-bold small mb-0"><i class="bi bi-shield-exclamation text-danger"></i> <span data-i18n="emerg_title">Alertas y Monitoreo Costero</span></h6>
+      </div>
+
+      <!-- Botones oficiales externos -->
+      <div class="d-flex gap-2 mb-3">
+        <button onclick="abrirDefensaCivil()" class="btn btn-sm btn-outline-danger py-1 px-2 w-50" style="font-size: 0.74rem;">
+          <i class="bi bi-radar"></i> Radar Defesa Civil
+        </button>
+        <button onclick="abrirBalneabilidade()" class="btn btn-sm btn-outline-primary py-1 px-2 w-50" style="font-size: 0.74rem;">
+          <i class="bi bi-water"></i> Aguas IMA SC
+        </button>
       </div>
 
       <!-- Recuadro para Carga Manual de Avisos por parte del complejo -->
       <div class="p-2 mb-2 bg-white rounded border border-warning" style="font-size: 0.8rem;">
         <span class="badge bg-warning text-dark mb-1" data-i18n="bulletin_tag">Boletín del Día</span>
         <p class="mb-0 text-muted" id="daily-alert" data-i18n="bulletin_text">
-          Condiciones normales de playa. Probabilidad de precipitaciones aisladas hacia la tarde/noche. Viento suave del noreste rotando a sur.
+          Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.
         </p>
       </div>
 
@@ -286,7 +297,7 @@
       </div>
     </div>
 
-    <!-- 7. DIFERENCIALES COMPETENCIA (...Y MUCHO MÁS) -->
+    <!-- 7. TU ESTADÍA PERFECTA & RESEÑAS 5 ESTRELLAS -->
     <div class="card card-custom">
       <div class="card-header-custom">
         <i class="bi bi-stars text-warning"></i> <span data-i18n="extra_title">4. Tu Estadía Perfecta en Lagoinha</span>
@@ -306,10 +317,10 @@
             <span data-i18n="pharm_d">En Ponta das Canas (a 1.2 km). Delivery disponible por WhatsApp.</span>
           </div>
         </div>
-        <!-- Impulsor de Reseñas de 5 Estrellas -->
-        <a href="[suspicious link removed]" target="_blank" class="btn btn-outline-warning text-dark w-100 py-1" style="font-size: 0.8rem; font-weight: 600;">
+        <!-- Botón a Reseñas con enlace seguro -->
+        <button onclick="abrirResenas()" class="btn btn-outline-warning text-dark w-100 py-2" style="font-size: 0.82rem; font-weight: 600;">
           <i class="bi bi-star-fill text-warning"></i> <span data-i18n="btn_review">¿Disfrutaste tu estadía? Dejanos tu reseña 5 Estrellas</span>
-        </a>
+        </button>
       </div>
     </div>
 
@@ -336,7 +347,7 @@
       <div class="card-body-custom">
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c1">
-          <label class="form-check-label small" for="c1" data-i18n="chk_1">Aire acondicionado y luces apagadas</label>
+          <label class="form-check-label small" for="c1" data-i18n="chk_1">Aire acondicionado y luces apagados</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c2">
@@ -378,7 +389,7 @@
 
   </div>
 
-  <!-- DICCIONARIO TRILINGÜE, CLIMA & LÓGICA -->
+  <!-- DICCIONARIO TRILINGÜE, CLIMA & ENLACES -->
   <script>
     let currentLang = 'es';
 
@@ -395,8 +406,6 @@
         wifi_copied: "Contraseña copiada al portapapeles: ",
         wifi_note: "💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.",
         weather_loading: "Cargando clima en vivo...",
-        wind_alert_t: "⚠️ Cuidado con el Viento Sur:",
-        wind_alert_d: "En días de tormenta o viento sur fuerte, mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire o filtraciones.",
         equip_title: "2. Uso del Loft y Equipamiento",
         ac_title: "Aire Acondicionado",
         ac_desc: "Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.",
@@ -418,9 +427,9 @@
         badge_walk: "A pie",
         badge_inside: "Complejo",
         badge_door: "50 metros",
-        emerg_title: "Alertas y Defensa Civil",
+        emerg_title: "Alertas y Monitoreo Costero",
         bulletin_tag: "Boletín del Día",
-        bulletin_text: "Condiciones normales de playa. Probabilidad de precipitaciones aisladas hacia la tarde/noche. Viento suave del noreste rotando a sur.",
+        bulletin_text: "Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.",
         emerg_upa: "UPA Norte (Canasvieiras):",
         emerg_police: "Policía Militar:",
         emerg_fire: "Bomberos:",
@@ -464,8 +473,6 @@
         wifi_copied: "Senha copiada para a área de transferência: ",
         wifi_note: "💡 A estrutura de contêiner marítimo conta com excelente isolamento termoacústico; cada loft possui seu próprio roteador para máxima velocidade de fibra óptica.",
         weather_loading: "Carregando clima ao vivo...",
-        wind_alert_t: "⚠️ Atenção com o Vento Sul:",
-        wind_alert_d: "Em dias de chuva ou vento sul forte, mantenha a janela do banheiro e a porta principal fechadas para evitar correntes de ar e respingos.",
         equip_title: "2. Uso do Loft e Equipamentos",
         ac_title: "Ar-Condicionado",
         ac_desc: "Utilizar com portas e janelas fechadas. Ao sair para a praia, desligue para economizar energia e evitar sobrecargas.",
@@ -487,9 +494,9 @@
         badge_walk: "A pé",
         badge_inside: "Complexo",
         badge_door: "50 metros",
-        emerg_title: "Alertas e Defesa Civil",
+        emerg_title: "Alertas e Monitoramento Costeiro",
         bulletin_tag: "Boletim do Dia",
-        bulletin_text: "Condições normais de praia. Probabilidade de chuva isolada no fim da tarde/noite. Vento suave de nordeste virando para sul.",
+        bulletin_text: "Condições normais de praia. Água própria para banho segundo o IMA. Vento suave.",
         emerg_upa: "UPA Norte (Canasvieiras):",
         emerg_police: "Polícia Militar:",
         emerg_fire: "Bombeiros:",
@@ -501,7 +508,7 @@
         btn_review: "Gostou da estadia? Deixe sua avaliação 5 Estrelas no Google",
         rules_title: "5. Regras de Convivência",
         r1_t: "Horário de Silêncio:",
-        r1_d: "22:00 às 08:00 hs. Respeitamos o descanso de todas as famílias.",
+        r1_d: "22:00 às 08:00 hs. Respetamos o descanso de todas as famílias.",
         r2_t: "Ambiente Livre de Cigarro:",
         r2_d: "Estritamente proibido fumar dentro dos lofts/contêineres.",
         r3_t: "Estacionamento:",
@@ -533,8 +540,6 @@
         wifi_copied: "Password copied to clipboard: ",
         wifi_note: "💡 Container architecture offers outstanding thermal and acoustic insulation; each loft features its own router for maximum fiber-optic speed.",
         weather_loading: "Loading live weather...",
-        wind_alert_t: "⚠️ South Wind Advisory:",
-        wind_alert_d: "During storms or strong south gusts, please keep bathroom windows and front doors shut to prevent slamming or water ingress.",
         equip_title: "2. Loft Amenities & Equipment",
         ac_title: "Air Conditioning",
         ac_desc: "Use with doors and windows closed. Please turn it off when heading to the beach to save energy and prevent overload.",
@@ -556,9 +561,9 @@
         badge_walk: "Walking",
         badge_inside: "On site",
         badge_door: "50 meters",
-        emerg_title: "Alerts & Civil Defense",
+        emerg_title: "Alerts & Coastal Monitoring",
         bulletin_tag: "Daily Bulletin",
-        bulletin_text: "Pleasant beach conditions. Chance of scattered showers towards late afternoon. Gentle northeast breeze turning south.",
+        bulletin_text: "Pleasant beach conditions. Water suitable for bathing according to IMA. Gentle breeze.",
         emerg_upa: "North Emergency Room (UPA Canasvieiras):",
         emerg_police: "Police Department:",
         emerg_fire: "Firefighters / Rescue:",
@@ -638,6 +643,7 @@
       });
     }
 
+    // Funciones de enlaces directos sin bloqueos
     function abrirWhatsApp() {
       const tel = "5492235678263";
       const u = document.getElementById("unitSelect").options[document.getElementById("unitSelect").selectedIndex].text;
@@ -645,7 +651,19 @@
       window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
     }
 
-    // Clima en vivo geolocalizado en Praia da Lagoinha (-27.4231, -48.4287)
+    function abrirDefensaCivil() {
+      window.open("https://defesacivil.sc.gov.br/", "_blank");
+    }
+
+    function abrirBalneabilidade() {
+      window.open("https://balneabilidade.ima.sc.gov.br/", "_blank");
+    }
+
+    function abrirResenas() {
+      window.open("https://maps.app.goo.gl/PousadaCorujao", "_blank");
+    }
+
+    // Clima en vivo geolocalizado en Praia da Lagoinha
     async function fetchWeather() {
       try {
         const res = await fetch("[suspicious link removed]");
@@ -676,8 +694,7 @@
           document.getElementById('weather-icon').className = "bi " + iconClass + " fs-2";
         }
       } catch (e) {
-        // En modo offline mantiene los valores predeterminados
-        document.getElementById('weather-condition').innerText = "Lagoinha (Clima habitual de playa)";
+        document.getElementById('weather-condition').innerText = "Lagoinha (Clima costero)";
       }
     }
 
