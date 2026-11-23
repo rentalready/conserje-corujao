@@ -6,103 +6,337 @@
   <title>Conserje Digital · Residencial Corujão</title>
   <link rel="manifest" href="manifest.json">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <style>
-    body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #1c2d42; }
-    .header-box { background: linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 100%); color: #fff; padding: 24px 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
-    .card-custom { border: none; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 16px; background: #fff; }
-    .btn-action { background-color: #0077b6; color: #fff; border-radius: 10px; font-weight: 600; text-decoration: none; }
+    :root {
+      --rr-navy: #0d1b2a;
+      --rr-blue: #1b3a4b;
+      --rr-cyan: #0077b6;
+      --rr-accent: #00b4d8;
+      --rr-bg: #f4f6f9;
+      --rr-text: #1c2d42;
+    }
+    body { background-color: var(--rr-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--rr-text); padding-bottom: 40px; }
+    
+    /* Header Institucional */
+    .header-box {
+      background: linear-gradient(135deg, var(--rr-navy) 0%, var(--rr-blue) 100%);
+      color: #fff;
+      padding: 24px 20px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 4px 16px rgba(13, 27, 42, 0.15);
+    }
+    .brand-logos {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .badge-rr {
+      background: rgba(0, 180, 216, 0.2);
+      color: var(--rr-accent);
+      border: 1px solid var(--rr-accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+    .concierge-avatar {
+      width: 72px;
+      height: 72px;
+      background: #fff;
+      border: 3px solid var(--rr-accent);
+      border-radius: 50%;
+      padding: 4px;
+      margin: 0 auto 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Tarjetas y Módulos */
+    .card-custom {
+      border: none;
+      border-radius: 16px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      margin-bottom: 16px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .card-header-custom {
+      background: #fff;
+      border-bottom: 1px solid #edf2f7;
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--rr-navy);
+    }
+    .card-body-custom { padding: 16px 18px; }
+    
+    .btn-action {
+      background-color: var(--rr-cyan);
+      color: #fff;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+    }
     .btn-action:hover { background-color: #005f92; color: #fff; }
-    .alert-wind { background-color: #fff3cd; border-left: 5px solid #ffc107; color: #664d03; }
+    .alert-wind { background-color: #fff8e1; border-left: 5px solid #ffb703; color: #78350f; }
+    .badge-discount { background-color: #e63946; color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; }
+    .icon-circle {
+      width: 36px;
+      height: 36px;
+      background: #e0f2fe;
+      color: var(--rr-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
 
+  <!-- HEADER INSTITUCIONAL -->
   <div class="header-box text-center">
-    <h2 class="h4 mb-1">🌊 Residencial Corujão</h2>
-    <p class="small text-white-50 mb-2">Lagoinha do Norte · Florianópolis</p>
-    <span class="badge bg-success">Guía Activa sin Conexión</span>
+    <div class="container" style="max-width: 540px;">
+      
+      <div class="brand-logos">
+        <span class="fw-bold tracking-wide" style="font-size: 0.9rem; letter-spacing: 0.5px;">RESIDENCIAL CORUJÃO</span>
+        <span class="badge-rr"><i class="bi bi-shield-check"></i> RENTAL READY</span>
+      </div>
+
+      <!-- ASISTENTE VIRTUAL (ROBOT BRÚJULA CON CAMISA HAWAIANA) -->
+      <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=150&q=80" 
+           onerror="this.src='https://cdn-icons-png.flaticon.com/512/4712/4712109.png'" 
+           alt="Asistente Virtual" class="concierge-avatar">
+      
+      <h1 class="h5 mb-1 fw-bold">¡Bienvenido a tu Loft! 🌊</h1>
+      <p class="small text-white-50 mb-2">Lagoinha do Norte · Florianópolis</p>
+      <span class="badge bg-success bg-opacity-75" style="font-size: 0.75rem;">
+        <i class="bi bi-wifi-off"></i> Guía Inteligente Offline Activa
+      </span>
+    </div>
   </div>
 
   <div class="container py-3" style="max-width: 540px;">
 
-    <!-- SELECTOR DE UNIDAD -->
-    <div class="card card-custom p-3">
-      <label class="fw-bold mb-2">📍 Seleccioná tu Unidad o Sector:</label>
-      <select id="unitSelect" class="form-select form-select-lg mb-3" onchange="updateWifi()">
-        <option value="1">Kitnet 01 (Lagoinha do Norte)</option>
-        <option value="2">Kitnet 02 (Brava)</option>
-        <option value="3">Kitnet 03 (Ponta das Canas)</option>
-        <option value="4">Kitnet 04 (Cachoeira do Bom Jesus)</option>
-        <option value="5">Kitnet 05 (Canasvieiras)</option>
-        <option value="6">Kitnet 06 (Santinho)</option>
-        <option value="7">Kitnet 07 (Ingleses)</option>
-        <option value="8">Kitnet 08 (Gaivotas)</option>
-        <option value="9">Kitnet 09 (Moçambique)</option>
-        <option value="10">Kitnet 10 (Jurerê)</option>
-        <option value="11">Kitnet 11 (Daniela)</option>
-        <option value="mini">Minimercado Corujão</option>
-        <option value="mh">🚐 Estacionamiento Motorhomes</option>
-      </select>
-
-      <div class="bg-light p-3 rounded text-center">
-        <span class="text-muted d-block small mb-1">Red Wi-Fi Dedicada:</span>
-        <h5 id="wifiSsid" class="fw-bold text-primary mb-1">Lagoinha do Norte</h5>
-        <span class="text-muted d-block small mb-1">Contraseña:</span>
-        <h5 id="wifiPass" class="fw-bold text-dark mb-3">corujao01</h5>
-        <button class="btn btn-sm btn-outline-primary" onclick="copyWifi()">📋 Copiar Contraseña</button>
+    <!-- 1. MÓDULO CONEXIÓN WI-FI POR UNIDAD -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-router text-primary"></i> 1. Tu Conexión Wi-Fi Dedicada
       </div>
-      <p class="small text-muted mt-2 mb-0 text-center">
-        <em>💡 Contenedor blindado con aislación termoacústica: cada unidad tiene su propio router para máxima velocidad.</em>
-      </p>
+      <div class="card-body-custom">
+        <label class="form-label small text-muted mb-2">Seleccioná tu contenedor o sector:</label>
+        <select id="unitSelect" class="form-select form-select-lg mb-3" onchange="updateWifi()" style="font-size: 0.95rem;">
+          <option value="1">Kitnet 01 (Lagoinha do Norte)</option>
+          <option value="2">Kitnet 02 (Brava)</option>
+          <option value="3">Kitnet 03 (Ponta das Canas)</option>
+          <option value="4">Kitnet 04 (Cachoeira do Bom Jesus)</option>
+          <option value="5">Kitnet 05 (Canasvieiras)</option>
+          <option value="6">Kitnet 06 (Santinho)</option>
+          <option value="7">Kitnet 07 (Ingleses)</option>
+          <option value="8">Kitnet 08 (Gaivotas)</option>
+          <option value="9">Kitnet 09 (Moçambique)</option>
+          <option value="10">Kitnet 10 (Jurerê)</option>
+          <option value="11">Kitnet 11 (Daniela)</option>
+          <option value="mini">Minimercado Corujão</option>
+          <option value="mh">🚐 Estacionamiento Motorhomes (Park & Stay)</option>
+        </select>
+
+        <div class="bg-light p-3 rounded-3 text-center border">
+          <span class="text-muted d-block small mb-1">Nombre de Red (SSID):</span>
+          <h5 id="wifiSsid" class="fw-bold text-primary mb-2">Lagoinha do Norte</h5>
+          <span class="text-muted d-block small mb-1">Contraseña:</span>
+          <h5 id="wifiPass" class="fw-bold text-dark mb-3">corujao01</h5>
+          <button class="btn btn-sm btn-outline-primary px-3 rounded-pill" onclick="copyWifi()">
+            <i class="bi bi-clipboard"></i> Copiar Contraseña
+          </button>
+        </div>
+        <p class="small text-muted mt-2 mb-0" style="font-size: 0.78rem;">
+          <em>💡 La estructura de contenedor blindado garantiza excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.</em>
+        </p>
+      </div>
     </div>
 
-    <!-- ALERTA CLIMÁTICA -->
+    <!-- 2. ALERTA PREVENTIVA CLIMÁTICA -->
     <div class="card card-custom p-3 alert-wind">
-      <h6 class="fw-bold mb-1">⚠️ Cuidado con el Viento Sur</h6>
-      <p class="small mb-0">En días de tormenta o ráfagas fuertes, por favor mantener cerrada la ventana del baño y la puerta principal para evitar filtraciones y golpes de viento.</p>
-    </div>
-
-    <!-- BENEFICIO MINIMERCADO -->
-    <div class="card card-custom p-3">
-      <h6 class="fw-bold mb-1">🧊 Beneficio Exclusivo Corujão</h6>
-      <p class="small mb-0">Consumiendo tus bebidas en el Minimercado Corujão (a 30 m), podés solicitar una conservadora/cooler prestada sin costo para llevar a la playa.</p>
-    </div>
-
-    <!-- CHECKLIST DE CHECK-OUT -->
-    <div class="card card-custom p-3">
-      <h6 class="fw-bold mb-3">🏁 Checklist de Salida (Hasta las 10:00 hs)</h6>
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="c1">
-        <label class="form-check-label small" for="c1">Aire acondicionado y luces apagadas</label>
-      </div>
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="c2">
-        <label class="form-check-label small" for="c2">Canillas cerradas y ducha sin gotear</label>
-      </div>
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="c3">
-        <label class="form-check-label small" for="c3">Basura retirada y depositada en cesto exterior</label>
-      </div>
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="c4">
-        <label class="form-check-label small" for="c4">Cuentas de Netflix / Streaming deslogueadas de la TV</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="c5">
-        <label class="form-check-label small" for="c5">Llaves dejadas sobre la mesa o entregadas al anfitrión</label>
+      <div class="d-flex gap-3">
+        <i class="bi bi-wind fs-3"></i>
+        <div>
+          <h6 class="fw-bold mb-1">Cuidado con el Viento Sur</h6>
+          <p class="small mb-0">En días de tormenta o ráfagas fuertes, por favor mantener cerrada la ventana del baño y la puerta principal para evitar golpes de aire y filtraciones.</p>
+        </div>
       </div>
     </div>
 
-    <!-- ASISTENCIA DIRECTA WHATSAPP -->
-    <div class="card card-custom p-3 text-center">
-      <span class="small text-muted mb-2 d-block">¿Necesitás asistencia de los anfitriones?</span>
-      <a href="https://wa.me/5492235678263" class="btn btn-action py-2 px-3 d-inline-block">
-        💬 Asistencia por WhatsApp
+    <!-- 3. USO DE ARTEFACTOS E INSTALACIONES DEL LOFT -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-sliders text-primary"></i> 2. Uso del Loft y Equipamiento
+      </div>
+      <div class="card-body-custom">
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-snow text-info"></i> Aire Acondicionado</h6>
+          <p class="small text-muted mb-0">Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.</p>
+        </div>
+        <hr class="my-2">
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> Ducha y Agua Caliente</h6>
+          <p class="small text-muted mb-0">Selector de temperatura directo en la ducha. En el predio disponemos de ducha exterior fría para quitarse la arena antes de entrar al contenedor.</p>
+        </div>
+        <hr class="my-2">
+        <div>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-umbrella text-warning"></i> Sillas y Sombrilla de Playa</h6>
+          <p class="small text-muted mb-0">Cada loft incluye sillas y sombrilla asignadas. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. BENEFICIO EXCLUSIVO MINIMERCADO -->
+    <div class="card card-custom p-3 border-start border-4 border-info">
+      <div class="d-flex align-items-center gap-3">
+        <div class="icon-circle bg-info bg-opacity-10 text-info">
+          <i class="bi bi-cup-straw"></i>
+        </div>
+        <div>
+          <h6 class="fw-bold mb-1">Beneficio Cooler de Playa</h6>
+          <p class="small text-muted mb-0">Comprando tus bebidas en el <strong>Minimercado Corujão</strong> (a 30 m), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. GUÍA LOCAL Y COMERCIOS DE CONFIANZA -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-geo-alt text-primary"></i> 3. Guía de Servicios Locales
+      </div>
+      <div class="card-body-custom">
+        
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0">🥖 Panadería "La Colmena"</h6>
+            <span class="small text-muted">A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs</span>
+          </div>
+          <span class="badge bg-light text-dark border">A pie</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0">🥩 Carnicería para Asados & Minimarket</h6>
+            <span class="small text-muted">Cortes para parrilla, carbón, hielo y bebidas a 50 metros.</span>
+          </div>
+          <span class="badge bg-light text-dark border">Vecino</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h6 class="fw-bold small mb-0">🍝 Restaurante Puny (Pastas & Grill)</h6>
+            <span class="small text-muted">A 2 km en auto. Mencioná que vas de Residencial Corujão.</span>
+          </div>
+          <span class="badge-discount">-10% OFF</span>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h6 class="fw-bold small mb-0">🚌 Transporte al Centro de Florianópolis</h6>
+            <span class="small text-muted">Parada a 80 metros. Línea 1122 Executivo Praia Brava directo al centro.</span>
+          </div>
+          <span class="badge bg-light text-dark border">En puerta</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 6. NORMAS DE CONVIVENCIA Y COEXISTENCIA -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-shield-lock text-primary"></i> 4. Normas de Convivencia
+      </div>
+      <div class="card-body-custom small text-muted">
+        <ul class="mb-0 ps-3">
+          <li class="mb-2"><strong>Horario de Silencio:</strong> 22:00 a 08:00 hs. Respetamos el descanso de todas las familias.</li>
+          <li class="mb-2"><strong>Espacio Libre de Humo:</strong> Prohibido fumar dentro de los contenedores.</li>
+          <li class="mb-2"><strong>Cocheras:</strong> 1 vehículo asignado por loft en el sector delimitado.</li>
+          <li><strong>Mascotas:</strong> Circular siempre con correa en áreas comunes y recoger sus necesidades.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 7. PROTOCOLO DE URGENCIAS Y SALUD -->
+    <div class="card card-custom p-3 bg-light border">
+      <h6 class="fw-bold small mb-2"><i class="bi bi-telephone-plus text-danger"></i> Teléfonos Útiles y Emergencias</h6>
+      <div class="d-flex justify-content-between small text-muted">
+        <span>UPA Norte (Canasvieiras):</span>
+        <span class="fw-bold">192 (SAMU)</span>
+      </div>
+      <div class="d-flex justify-content-between small text-muted mt-1">
+        <span>Policía Militar:</span>
+        <span class="fw-bold">190</span>
+      </div>
+      <div class="d-flex justify-content-between small text-muted mt-1">
+        <span>Bomberos:</span>
+        <span class="fw-bold">193</span>
+      </div>
+    </div>
+
+    <!-- 8. CHECKLIST DE SALIDA (CHECK-OUT) -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-check2-circle text-primary"></i> 5. Checklist de Salida (Hasta las 10:00 hs)
+      </div>
+      <div class="card-body-custom">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="c1">
+          <label class="form-check-label small" for="c1">Aire acondicionado y luces apagadas</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="c2">
+          <label class="form-check-label small" for="c2">Canillas cerradas y ducha sin gotear</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="c3">
+          <label class="form-check-label small" for="c3">Basura retirada y depositada en cesto exterior</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="c4">
+          <label class="form-check-label small" for="c4">Cuentas de Netflix / Streaming deslogueadas de la TV</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="c5">
+          <label class="form-check-label small" for="c5">Llaves dejadas sobre la mesa o entregadas al anfitrión</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. CONTACTO Y ASISTENCIA DIRECTA WHATSAPP -->
+    <div class="card card-custom p-3 text-center border-0 shadow-sm">
+      <span class="small text-muted mb-2 d-block">¿Necesitás comunicarte con los anfitriones del predio?</span>
+      <a href="[suspicious link removed]" 
+         class="btn btn-action py-2 px-4 d-inline-block" target="_blank">
+        <i class="bi bi-whatsapp"></i> Hablar con el Anfitrión
       </a>
+      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;">
+        Atención presencial: Martín, María, Juan Martín y Marcos
+      </span>
+    </div>
+
+    <!-- FOOTER INSTITUCIONAL DISCRETO -->
+    <div class="text-center mt-4">
+      <p class="text-muted mb-0" style="font-size: 0.75rem;">
+        Infraestructura Operativa y Digital provista por <strong>Rental Ready</strong><br>
+        <em>Menos confusión. Más control.</em>
+      </p>
     </div>
 
   </div>
 
+  <!-- SCRIPT DINÁMICO & SERVICE WORKER -->
   <script>
     const wifiData = {
       "1": { ssid: "Lagoinha do Norte", pass: "corujao01" },
@@ -129,7 +363,7 @@
     function copyWifi() {
       const pass = document.getElementById("wifiPass").innerText;
       navigator.clipboard.writeText(pass);
-      alert("Contraseña copiada: " + pass);
+      alert("Contraseña copiada al portapapeles: " + pass);
     }
 
     if ('serviceWorker' in navigator) {
