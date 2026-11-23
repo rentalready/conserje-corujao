@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conserje Digital · Residencial Corujão</title>
+  <title>Conserje Digital · Residencial Corujão Lofts</title>
   <link rel="manifest" href="manifest.json">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -52,14 +52,37 @@
     }
     .btn-action:hover { background-color: #1eb956; color: #fff; }
     
-    /* Módulo Clima */
+    /* Módulos Clima & Destacados */
     .weather-card {
       background: linear-gradient(135deg, #0077b6 0%, #0096c7 100%);
       color: #fff;
       border-radius: 16px;
       padding: 16px 18px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       box-shadow: 0 4px 12px rgba(0, 119, 182, 0.2);
+    }
+    .beach-card {
+      background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(2, 128, 144, 0.2);
+    }
+    .workation-card {
+      background: linear-gradient(135deg, #1b3a4b 0%, #2c5d77 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+    .cooler-card {
+      background: linear-gradient(135deg, #ff7b00 0%, #ff9e00 100%);
+      color: #fff;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(255, 123, 0, 0.2);
     }
     .weather-temp { font-size: 2.2rem; font-weight: 800; line-height: 1; }
 
@@ -80,29 +103,43 @@
       color: var(--rr-navy);
       border-color: #fff;
     }
-    .icon-circle {
-      width: 36px;
-      height: 36px;
-      background: #e0f2fe;
-      color: var(--rr-cyan);
-      border-radius: 50%;
+
+    /* Reglas y Cajas de alerta */
+    .rule-box {
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.86rem;
+    }
+    .rule-strict { background-color: #fef2f2; border-left: 4px solid #ef4444; }
+    .rule-warn { background-color: #fffbeb; border-left: 4px solid #f59e0b; }
+    .rule-ok { background-color: #f0fdf4; border-left: 4px solid #22c55e; }
+
+    .emergency-btn {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.82rem;
+      margin-bottom: 6px;
     }
+    .emergency-btn:hover { background: #f1f5f9; color: #0f172a; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER INTEGRADO (SELECTOR DE IDIOMAS + TEXTO + IMAGEN) -->
+  <!-- HEADER INTEGRADO (TRILINGÜE + TÍTULO + IMAGEN) -->
   <div class="text-center" style="background: #06222b; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
     
-    <!-- Barra superior con selector de idioma -->
     <div class="d-flex justify-content-between align-items-center px-3 pt-3" style="max-width: 440px; margin: 0 auto;">
       <span class="badge bg-success bg-opacity-75" style="font-size: 0.72rem;">
-        <i class="bi bi-wifi-off"></i> <span data-i18n="badge_offline">Offline</span>
+        <i class="bi bi-shield-check"></i> <span data-i18n="badge_node">Alojamiento Verificado Rental Ready</span>
       </span>
       <div class="d-flex gap-1">
         <button onclick="setLanguage('es')" id="btn-es" class="lang-btn active">🇪🇸 ES</button>
@@ -111,515 +148,643 @@
       </div>
     </div>
 
-    <!-- Título de Bienvenida en Texto Vivo -->
+    <!-- Título de Bienvenida Cálido -->
     <div class="pt-3 pb-1 px-3 text-white">
-      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! Soy tu Conserje Digital!</h2>
-      <p id="hero-sub" class="small text-white-50 mb-0">Lagoinha do Norte · Florianópolis</p>
+      <h2 id="hero-title" class="h4 fw-bold mb-1" style="letter-spacing: 0.5px;">¡Hola! ¡Soy tu Conserje Digital! 🌴✨</h2>
+      <p id="hero-sub" class="small text-white-50 mb-0">Residencial Corujão · Lofts a 80m del Mar · Florianópolis</p>
     </div>
 
-    <!-- Imagen Maestra -->
+    <!-- Imagen de Cabecera -->
     <div style="max-width: 440px; margin: 0 auto; padding: 6px 12px 14px;">
-      <img src="conserje-bg.jpg" onerror="this.src='badsn.jpg'" alt="Conserje Digital Residencial Corujão" style="width: 100%; height: auto; display: block; border-radius: 14px;">
+      <img id="main-hero-img" src="conserje-residencial.jpg" onerror="handleImgError(this)" alt="Conserje Digital Residencial Corujão" style="width: 100%; height: auto; display: block; border-radius: 14px;">
     </div>
   </div>
 
   <div class="container py-3" style="max-width: 540px;">
 
-    <!-- 1. MÓDULO CONEXIÓN WI-FI POR UNIDAD -->
-    <div class="card card-custom">
-      <div class="card-header-custom">
-        <i class="bi bi-router text-primary"></i> <span data-i18n="wifi_title">1. Tu Conexión Wi-Fi Dedicada</span>
-      </div>
-      <div class="card-body-custom">
-        <label data-i18n="wifi_select_label" class="form-label small text-muted mb-2">Seleccioná tu contenedor o sector:</label>
-        <select id="unitSelect" class="form-select form-select-lg mb-3" onchange="updateWifi()" style="font-size: 0.95rem;">
-          <option value="1">Kitnet 01 (Lagoinha do Norte)</option>
-          <option value="2">Kitnet 02 (Brava)</option>
-          <option value="3">Kitnet 03 (Ponta das Canas)</option>
-          <option value="4">Kitnet 04 (Cachoeira do Bom Jesus)</option>
-          <option value="5">Kitnet 05 (Canasvieiras)</option>
-          <option value="6">Kitnet 06 (Santinho)</option>
-          <option value="7">Kitnet 07 (Ingleses)</option>
-          <option value="8">Kitnet 08 (Gaivotas)</option>
-          <option value="9">Kitnet 09 (Moçambique)</option>
-          <option value="10">Kitnet 10 (Jurerê)</option>
-          <option value="11">Kitnet 11 (Daniela)</option>
-          <option value="mini">Minimercado Corujão</option>
-          <option value="mh">🚐 Estacionamiento Motorhomes (Park & Stay)</option>
-        </select>
-
-        <div class="bg-light p-3 rounded-3 text-center border">
-          <span data-i18n="wifi_ssid_label" class="text-muted d-block small mb-1">Nombre de Red (SSID):</span>
-          <h5 id="wifiSsid" class="fw-bold text-primary mb-2">Lagoinha do Norte</h5>
-          <span data-i18n="wifi_pass_label" class="text-muted d-block small mb-1">Contraseña:</span>
-          <h5 id="wifiPass" class="fw-bold text-dark mb-3">corujao01</h5>
-          <button class="btn btn-sm btn-outline-primary px-3 rounded-pill" onclick="copyWifi()">
-            <i class="bi bi-clipboard"></i> <span data-i18n="wifi_btn_copy">Copiar Contraseña</span>
-          </button>
+    <!-- MENSAJE DE BIENVENIDA -->
+    <div class="card card-custom p-3 border-start border-4 border-success">
+      <div class="d-flex gap-3 align-items-center">
+        <div class="fs-1 text-success"><i class="bi bi-house-heart"></i></div>
+        <div>
+          <h6 class="fw-bold mb-1" data-i18n="welcome_t">¡Bienvenidos a tu loft en Praia da Lagoinha!</h6>
+          <p class="small text-muted mb-0" data-i18n="welcome_d">
+            Tu descanso empieza ahora. Diseñamos este conserje para darte total autonomía: claves, recomendaciones, pronósticos y respuestas inmediatas durante toda tu estadía.
+          </p>
         </div>
-        <p data-i18n="wifi_note" class="small text-muted mt-2 mb-0" style="font-size: 0.78rem;">
-          <em>💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.</em>
-        </p>
       </div>
     </div>
 
-    <!-- 2. MÓDULO CLIMA EN VIVO (SIN VIENTO SUR) -->
+    <!-- 1. WI-FI DEDICADO POR CONTENEDOR (SELECTOR INTERACTIVO) -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-wifi text-primary"></i> <span data-i18n="wifi_t">1. Conexión Wi-Fi de Fibra de tu Unidad</span>
+      </div>
+      <div class="card-body-custom">
+        <p class="small text-muted mb-3" data-i18n="wifi_desc" style="font-size: 0.82rem; line-height: 1.35;">
+          Nuestros lofts están construidos en contenedores marítimos modernos con aislación termoacústica blindada. Para asegurar máxima estabilidad y velocidad sin interferencias, cada unidad cuenta con su propio router de fibra óptica independiente.
+        </p>
+
+        <label class="form-label small fw-bold text-muted mb-1" data-i18n="wifi_select_l">Seleccioná tu número de Loft / Kitnet:</label>
+        <select id="loftSelector" class="form-select form-select-sm mb-3" onchange="cambiarRedWifi()">
+          <option value="01">Kitnet 01 — Rede: Lagoinha do Norte</option>
+          <option value="02">Kitnet 02 — Rede: Brava</option>
+          <option value="03">Kitnet 03 — Rede: Ponta das Canas</option>
+          <option value="04">Kitnet 04 — Rede: Cachoeira do Bom Jesus</option>
+          <option value="05">Kitnet 05 — Rede: Canasvieiras</option>
+          <option value="06">Kitnet 06 — Rede: Santinho</option>
+          <option value="07">Kitnet 07 — Rede: Ingleses</option>
+          <option value="08">Kitnet 08 — Rede: Gaivotas</option>
+          <option value="09">Kitnet 09 — Rede: Moçambique</option>
+          <option value="10">Kitnet 10 — Rede: Jurerê</option>
+          <option value="11">Kitnet 11 — Rede: Daniela</option>
+        </select>
+
+        <div class="bg-light p-3 rounded-3 text-center border">
+          <span class="text-muted d-block small mb-1" data-i18n="wifi_current_net">Red de tu Loft:</span>
+          <h5 id="wifiSsid" class="fw-bold text-primary mb-2">Lagoinha do Norte</h5>
+          <span class="text-muted d-block small mb-1" data-i18n="wifi_pass_l">Contraseña:</span>
+          <h5 id="wifiPass" class="fw-bold text-dark mb-3">corujao01</h5>
+          <button class="btn btn-sm btn-outline-primary px-3 rounded-pill" onclick="copiarWifi()">
+            <i class="bi bi-clipboard"></i> <span data-i18n="wifi_btn">Copiar Contraseña</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELLO WORKATION READY -->
+    <div class="workation-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-laptop fs-3 text-info"></i>
+          <div>
+            <h6 class="fw-bold mb-0">💻 <span data-i18n="work_badge">Apto Workation · Sello Workation Ready</span></h6>
+            <span class="badge bg-success bg-opacity-75" style="font-size: 0.68rem;" data-i18n="work_cert">Certificación Rental Ready</span>
+          </div>
+        </div>
+      </div>
+      <p class="small mb-2 text-white-50" style="font-size: 0.8rem; line-height: 1.3;" data-i18n="work_desc">
+        Significa que fue verificada la estabilidad de la conexión, la latencia, el entorno eléctrico y las condiciones básicas para trabajar remoto. No garantiza velocidad extrema, pero sí una experiencia estable y confiable.
+      </p>
+      <div class="bg-black bg-opacity-25 p-2 rounded-3 text-center border border-light border-opacity-10">
+        <span class="badge bg-light text-dark fw-bold mb-1" style="font-size: 0.72rem;" data-i18n="work_test">Conectividad testeada 16/10/2026</span>
+        <div class="small fw-bold text-white mt-1">
+          📥 60 Mbps Descarga &nbsp;|&nbsp; 📤 30 Mbps Subida &nbsp;|&nbsp; ⚡ Latencia: 20ms
+        </div>
+      </div>
+    </div>
+
+    <!-- CLIMA EN VIVO -->
     <div class="weather-card">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <div>
           <span class="badge bg-white text-primary fw-bold" style="font-size: 0.72rem;">
-            <i class="bi bi-geo-alt-fill"></i> Praia da Lagoinha
+            <i class="bi bi-cloud-sun"></i> Praia da Lagoinha
           </span>
           <span class="small d-block text-white-50 mt-1" id="weather-condition" data-i18n="weather_loading">Cargando clima en vivo...</span>
         </div>
         <i class="bi bi-sun-fill fs-2" id="weather-icon"></i>
       </div>
-
       <div class="d-flex align-items-baseline gap-3 my-1">
         <span class="weather-temp" id="weather-temp">26°C</span>
         <span class="small text-white-50" id="weather-wind">Viento: 12 km/h</span>
       </div>
     </div>
 
-    <!-- 3. USO DE ARTEFACTOS E INSTALACIONES DEL LOFT -->
+    <!-- ALERTAS Y MONITOREO COSTERO -->
+    <div class="beach-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="d-flex align-items-center gap-2">
+          <i class="bi bi-water fs-4"></i>
+          <div>
+            <h6 class="fw-bold mb-0" data-i18n="beach_card_t">Alertas y Monitoreo Costero</h6>
+            <span class="small text-white-50" data-i18n="beach_card_s">Boletín Oficial del Día</span>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white bg-opacity-10 p-2 rounded-3 mb-2" style="font-size: 0.8rem; line-height: 1.35;">
+        <i class="bi bi-check-circle-fill text-warning"></i> <strong data-i18n="boletin_t">Boletín del Día:</strong> <span data-i18n="boletin_d">Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.</span>
+      </div>
+      <button onclick="abrirBalneabilidade()" class="btn btn-sm btn-light text-dark fw-bold py-1 px-3 rounded-pill w-100" style="font-size: 0.78rem;">
+        <i class="bi bi-patch-check-fill text-success"></i> <span data-i18n="beach_btn">Consultar Balneabilidad Oficial IMA</span>
+      </button>
+    </div>
+
+    <!-- CENTRAL DE EMERGENCIAS Y SALUD -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-sliders text-primary"></i> <span data-i18n="equip_title">2. Uso del Loft y Equipamiento</span>
+        <i class="bi bi-telephone-plus text-danger"></i> <span data-i18n="emerg_t">Central de Emergencias y Salud</span>
       </div>
       <div class="card-body-custom">
-        <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-snow text-info"></i> <span data-i18n="ac_title">Aire Acondicionado</span></h6>
-          <p data-i18n="ac_desc" class="small text-muted mb-0">Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.</p>
-        </div>
-        <hr class="my-2">
-        <div class="mb-3">
-          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> <span data-i18n="shower_title">Ducha y Agua Caliente</span></h6>
-          <p data-i18n="shower_desc" class="small text-muted mb-0">En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.</p>
-        </div>
-        <hr class="my-2">
-        <div>
-          <h6 class="fw-bold small mb-1"><i class="bi bi-umbrella text-warning"></i> <span data-i18n="beach_title">Sillas y Sombrilla de Playa</span></h6>
-          <p data-i18n="beach_desc" class="small text-muted mb-0">Cada loft incluye sillas y sombrilla asignadas con el logo del complejo. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 4. BENEFICIO EXCLUSIVO MINIMERCADO (DENTRO DEL COMPLEJO) -->
-    <div class="card card-custom p-3 border-start border-4 border-info">
-      <div class="d-flex align-items-center gap-3">
-        <div class="icon-circle bg-info bg-opacity-10 text-info">
-          <i class="bi bi-cup-straw"></i>
-        </div>
-        <div>
-          <h6 data-i18n="cooler_title" class="fw-bold mb-1">Beneficio Cooler de Playa</h6>
-          <p data-i18n="cooler_desc" class="small text-muted mb-0">Consumiendo tus bebidas en el <strong>Minimercado Corujão (dentro del complejo)</strong>, podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.</p>
+        <a href="tel:192" class="emergency-btn">
+          <span><i class="bi bi-hospital text-danger me-2"></i> SAMU / Emergencias Médicas</span>
+          <span class="badge bg-danger">192</span>
+        </a>
+        <a href="tel:190" class="emergency-btn">
+          <span><i class="bi bi-shield-shaded text-primary me-2"></i> Policía Militar</span>
+          <span class="badge bg-primary">190</span>
+        </a>
+        <a href="tel:193" class="emergency-btn">
+          <span><i class="bi bi-fire text-warning me-2"></i> Bomberos</span>
+          <span class="badge bg-warning text-dark">193</span>
+        </a>
+        <div class="p-2 rounded bg-light border mt-2" style="font-size: 0.8rem;">
+          <strong>🏥 UPA Norte (Canasvieiras):</strong> Rua Francisco Faustino dos Santos, Canasvieiras. Atención médica de guardia 24 horas.<br>
+          <strong>💊 Farmacia de Turno:</strong> En Ponta das Canas (a 1.2 km). Cuenta con servicio de Delivery por WhatsApp.
         </div>
       </div>
     </div>
 
-    <!-- 5. GUÍA LOCAL Y COMERCIOS DE CONFIANZA -->
+    <!-- 2. USO DEL LOFT Y EQUIPAMIENTO PARTICULAR -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-geo-alt text-primary"></i> <span data-i18n="guide_title">3. Guía de Servicios Locales</span>
+        <i class="bi bi-sliders text-primary"></i> <span data-i18n="loft_t">2. Uso del Loft y Equipamiento Particular</span>
       </div>
       <div class="card-body-custom">
         
-        <div class="d-flex justify-content-between align-items-start mb-3">
-          <div>
-            <h6 data-i18n="bakery_title" class="fw-bold small mb-0">🥖 Panadería "La Colmena"</h6>
-            <span data-i18n="bakery_desc" class="small text-muted">A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs</span>
+        <!-- Beneficio Cooler Playa -->
+        <div class="cooler-card">
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <i class="bi bi-snow fs-4"></i>
+            <h6 class="fw-bold mb-0" data-i18n="cooler_t">🎁 Beneficio Exclusivo: Cooler para la Playa</h6>
           </div>
-          <span data-i18n="badge_walk" class="badge bg-light text-dark border">A pie</span>
+          <p class="small mb-0" style="font-size: 0.82rem; line-height: 1.3;" data-i18n="cooler_d">
+            Consumiendo tus bebidas en el Minimercado Corujão (al lado del complejo), podés pedir un <strong>cooler prestado sin costo</strong> para llevar tus latas y hielo bien fríos directo a la arena.
+          </p>
         </div>
 
-        <div class="d-flex justify-content-between align-items-start mb-3">
-          <div>
-            <h6 data-i18n="meat_title" class="fw-bold small mb-0">🥩 Carnicería & Minimarket</h6>
-            <span data-i18n="meat_desc" class="small text-muted">Cortes para asado, carbón, hielo y bebidas Minimercado Corujão (dentro del complejo).</span>
-          </div>
-          <span data-i18n="badge_inside" class="badge bg-primary bg-opacity-10 text-primary border">Complejo</span>
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-snow text-info"></i> <span data-i18n="ac_t">Aire Acondicionado & Eficiencia:</span></h6>
+          <p class="small text-muted mb-0" data-i18n="ac_d">Para un rendimiento óptimo y por compromiso ambiental, mantener puertas y ventanas cerradas mientras esté encendido. Por favor apagarlo al salir a la playa para evitar sobrecargas y derroche de energía innecesario.</p>
         </div>
+        <hr class="my-2">
 
-        <div class="d-flex justify-content-between align-items-start mb-3">
-          <div>
-            <h6 data-i18n="rancho_title" class="fw-bold small mb-0">🦐 Restaurante Rancho Do Pescador Lagoinha</h6>
-            <span data-i18n="rancho_desc" class="small text-muted">A 1 minuto a pie en la playa. Te encontrarás con el 🏆 MELHOR RESTAURANTE DE FRUTOS DO MAR DE FLORIPA ⚓ donde podrás disfrutar de sus riquísimos platos.</span>
-          </div>
-          <span class="badge bg-success bg-opacity-10 text-success border">1 min playa</span>
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-wind text-warning"></i> <span data-i18n="wind_t">Alerta Viento Sur (Ventanas):</span></h6>
+          <p class="small text-muted mb-0" data-i18n="wind_d">Si tu unidad cuenta con ventana en el baño orientada al sur (lofts familiares) y salís del loft o se avecina tormenta, <em>recordá dejarla cerrada</em>; el viento sur en la costa puede provocar fuertes golpes de aire o ingreso de lluvia.</p>
         </div>
+        <hr class="my-2">
 
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <h6 data-i18n="bus_title" class="fw-bold small mb-0">🚌 Transporte al Centro de Florianópolis</h6>
-            <span data-i18n="bus_desc" class="small text-muted">Parada a 50 metros. Línea 1122 Executivo Praia Brava directo al centro.</span>
-          </div>
-          <span data-i18n="badge_door" class="badge bg-light text-dark border">50 metros</span>
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-droplet-half text-primary"></i> <span data-i18n="shower_t">Ducha Externa Post-Playa:</span></h6>
+          <p class="small text-muted mb-0" data-i18n="shower_d">En el predio disponemos de ducha externa para quitarse la arena antes de ingresar al loft, manteniendo el interior fresco y limpio.</p>
+        </div>
+        <hr class="my-2">
+
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-umbrella text-success"></i> <span data-i18n="beach_gear_t">Equipamiento de Playa Libre:</span></h6>
+          <p class="small text-muted mb-0" data-i18n="beach_gear_d">Cada loft cuenta con sombrilla y reposeras con el logo de Residencial Corujão para que lleves cómodamente a la orilla del mar.</p>
+        </div>
+        <hr class="my-2">
+
+        <div>
+          <h6 class="fw-bold small mb-1"><i class="bi bi-basket text-secondary"></i> <span data-i18n="dry_t">Ténder y Ropa Mojada:</span></h6>
+          <p class="small text-muted mb-0" data-i18n="dry_d">Colgar toallas y mallas en el ténder individual asignado en el exterior del contenedor. Por estética y orden común, no se permite colgar ropa en barandas visibles.</p>
         </div>
 
       </div>
     </div>
 
-    <!-- 6. PROTOCOLO DE ALERTAS, ESTADO DEL AGUA Y DEFENSA CIVIL -->
-    <div class="card card-custom p-3 bg-light border">
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h6 class="fw-bold small mb-0"><i class="bi bi-shield-exclamation text-danger"></i> <span data-i18n="emerg_title">Alertas y Monitoreo Costero</span></h6>
+    <!-- 3. GUÍA DE SERVICIOS LOCALES -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-shop text-primary"></i> <span data-i18n="serv_t">3. Guía de Servicios y Comercios Locales</span>
       </div>
+      <div class="card-body-custom">
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-cart4 text-success"></i> <span data-i18n="mini_t">Minimercado & Cafetería Corujão (En el predio)</span></h6>
+          <p class="small text-muted mb-0" data-i18n="mini_d">A solo 30 m de tu puerta: café de cortesía, pan recién horneado a la mañana, bebidas frías, hielo, carbón, leña y cortes de carne seleccionados para tu asado.</p>
+        </div>
+        <hr class="my-2">
 
-      <!-- Botones oficiales externos -->
-      <div class="d-flex gap-2 mb-3">
-        <button onclick="abrirDefensaCivil()" class="btn btn-sm btn-outline-danger py-1 px-2 w-50" style="font-size: 0.74rem;">
-          <i class="bi bi-radar"></i> Radar Defesa Civil
-        </button>
-        <button onclick="abrirBalneabilidade()" class="btn btn-sm btn-outline-primary py-1 px-2 w-50" style="font-size: 0.74rem;">
-          <i class="bi bi-water"></i> Aguas IMA SC
-        </button>
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-egg-fried text-warning"></i> <span data-i18n="rancho_t">Rancho Do Pescador Lagoinha (A 1 min a pie)</span></h6>
+          <p class="small text-muted mb-0" data-i18n="rancho_d">Frente al mar en la bajada de la playa. 🏆 Galardonado como el mejor restaurante de mariscos y pescado fresco de Florianópolis.</p>
+        </div>
+        <hr class="my-2">
+
+        <div class="mb-3">
+          <h6 class="fw-bold small mb-1"><i class="bi bi-bus-front text-primary"></i> <span data-i18n="transp_t">Transporte Público y Movilidad</span></h6>
+          <p class="small text-muted mb-0" data-i18n="transp_d">Parada de colectivo a 50 metros. La línea 1122 Executivo Praia Brava te lleva directo y con aire acondicionado al centro de Florianópolis. Cobertura total de Uber con parcería Rental Ready para atención preferencial en temporada alta.</p>
+        </div>
       </div>
+    </div>
 
-      <!-- Recuadro para Carga Manual de Avisos por parte del complejo -->
-      <div class="p-2 mb-2 bg-white rounded border border-warning" style="font-size: 0.8rem;">
-        <span class="badge bg-warning text-dark mb-1" data-i18n="bulletin_tag">Boletín del Día</span>
-        <p class="mb-0 text-muted" id="daily-alert" data-i18n="bulletin_text">
-          Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.
+    <!-- 4. TU ESTADÍA PERFECTA EN LAGOINHA (PLANES DÍA / NOCHE / LLUVIA) -->
+    <div class="card card-custom">
+      <div class="card-header-custom">
+        <i class="bi bi-compass text-primary"></i> <span data-i18n="stay_t">4. Tu Estadía Perfecta en Lagoinha</span>
+      </div>
+      <div class="card-body-custom">
+
+        <div class="rule-box rule-ok mb-3">
+          <strong data-i18n="sun_t">☀️ ¿Día de Sol?:</strong><br>
+          <span data-i18n="sun_d">¡Playa, playa y más playa! Lagoinha do Norte está a 50m: agua cristalina, cálida, sin olas y perfecta para familias. Bajás con tus reposeras, sombrilla y el cooler del Minimercado.</span>
+        </div>
+
+        <div class="rule-box rule-warn mb-3">
+          <strong data-i18n="night_t">🌙 ¿Por la Noche?:</strong><br>
+          <span data-i18n="night_d">Dar una vuelta por el centro de Ponta das Canas (1.2 km), el polo gastronómico y comercial de Canasvieiras (10 min en auto), la vida nocturna de Ingleses o cenar en los sofisticados bistrós de Jurerê Internacional.</span>
+        </div>
+
+        <div class="rule-box rule-ok mb-3">
+          <strong data-i18n="rain_t">🌧️ ¿Día Nublado o de Lluvia?:</strong><br>
+          <span data-i18n="rain_d">Ideal para recorrer el Centro Histórico de Florianópolis (Mercado Público y Casa da Alfândega), pasear por los Shoppings (Villa Romana o Beiramar), deleitarte con la ruta gastronómica de Santo Antônio de Lisboa o hacer una escapada de compras a Balneário Camboriú (a 1 hora por BR-101).</span>
+        </div>
+
+        <h6 class="fw-bold small mb-2"><i class="bi bi-geo-alt text-primary"></i> Distancias a Playas Imperdibles:</h6>
+        <div class="row g-2 mb-3" style="font-size: 0.8rem;">
+          <div class="col-6">🏖️ Lagoinha do Norte: <strong>50 m</strong></div>
+          <div class="col-6">🏖️ Ponta das Canas: <strong>1,2 km</strong></div>
+          <div class="col-6">🏖️ Praia Brava: <strong>2,5 km</strong></div>
+          <div class="col-6">🏖️ Cachoeira do Bom Jesus: <strong>4,2 km</strong></div>
+          <div class="col-6">🏖️ Canasvieiras: <strong>7,5 km</strong></div>
+          <div class="col-6">🏖️ Jurerê: <strong>11,5 km</strong></div>
+          <div class="col-6">🏖️ Ingleses: <strong>12,5 km</strong></div>
+          <div class="col-6">🏖️ Santo Antônio de Lisboa: <strong>19,5 km</strong></div>
+        </div>
+
+        <h6 class="fw-bold small mb-1"><i class="bi bi-signpost-2 text-success"></i> Senderos y Naturaleza:</h6>
+        <p class="small text-muted mb-0" style="font-size: 0.82rem;">
+          🥾 <strong>Trilha da Lagoinha do Norte:</strong> paseo costero familiar bordeando el morro.<br>
+          🥾 <strong>Trilha do Morro das Feiticeiras:</strong> mirador natural con vista panorámica de toda la bahía norte.
         </p>
-      </div>
 
-      <div class="d-flex justify-content-between small text-muted">
-        <span data-i18n="emerg_upa">UPA Norte (Canasvieiras):</span>
-        <span class="fw-bold">192 (SAMU)</span>
-      </div>
-      <div class="d-flex justify-content-between small text-muted mt-1">
-        <span data-i18n="emerg_police">Policía Militar:</span>
-        <span class="fw-bold">190</span>
-      </div>
-      <div class="d-flex justify-content-between small text-muted mt-1">
-        <span data-i18n="emerg_fire">Bomberos:</span>
-        <span class="fw-bold">193</span>
       </div>
     </div>
 
-    <!-- 7. TU ESTADÍA PERFECTA & RESEÑAS 5 ESTRELLAS -->
+    <!-- 5. NORMAS DE CONVIVENCIA Y DESCANSO -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-stars text-warning"></i> <span data-i18n="extra_title">4. Tu Estadía Perfecta en Lagoinha</span>
+        <i class="bi bi-shield-check text-success"></i> <span data-i18n="rules_t">5. Normas de Convivencia y Armonía</span>
       </div>
-      <div class="card-body-custom small text-muted">
-        <div class="d-flex align-items-center gap-2 mb-2">
-          <i class="bi bi-water text-primary fs-5"></i>
-          <div>
-            <strong data-i18n="sea_t">Mar Calmo y Familiar:</strong>
-            <span data-i18n="sea_d">Lagoinha do Norte es ideal para niños gracias a su agua cristalina y poco oleaje.</span>
-          </div>
+      <div class="card-body-custom">
+        <div class="rule-box rule-warn">
+          <strong data-i18n="r_quiet_t">🔇 Horario de Silencio Estricto (22:00 a 08:00 hs):</strong><br>
+          <span data-i18n="r_quiet_d">Respeto mutuo entre lofts. Prohibido el uso de altavoces, parlantes bluetooth o música con volumen alto en áreas comunes y dentro de las unidades en este horario.</span>
         </div>
-        <div class="d-flex align-items-center gap-2 mb-3">
-          <i class="bi bi-capsule text-danger fs-5"></i>
-          <div>
-            <strong data-i18n="pharm_t">Farmacia de Turno:</strong>
-            <span data-i18n="pharm_d">En Ponta das Canas (a 1.2 km). Delivery disponible por WhatsApp.</span>
-          </div>
+        <div class="rule-box rule-strict">
+          <strong data-i18n="r_smoke_t">🚭 Espacio 100% Libre de Humo:</strong><br>
+          <span data-i18n="r_smoke_d">Terminantemente prohibido fumar dentro de los lofts. Si fumas en el exterior, utiliza cenicero y no arrojes colillas en el predio.</span>
         </div>
-        <!-- Botón a Reseñas con enlace seguro -->
-        <button onclick="abrirResenas()" class="btn btn-outline-warning text-dark w-100 py-2" style="font-size: 0.82rem; font-weight: 600;">
-          <i class="bi bi-star-fill text-warning"></i> <span data-i18n="btn_review">¿Disfrutaste tu estadía? Dejanos tu reseña 5 Estrellas</span>
-        </button>
+        <div class="rule-box rule-ok">
+          <strong data-i18n="r_park_t">🚗 Cochera Privada:</strong><br>
+          <span data-i18n="r_park_d">Cada unidad cuenta con un lugar asignado frente a su contenedor. Respetar la dársena para permitir la cómoda maniobra de los demás vehículos.</span>
+        </div>
+        <div class="rule-box rule-warn">
+          <strong data-i18n="r_pets_t">🐾 Mascotas con Responsabilidad:</strong><br>
+          <span data-i18n="r_pets_d">Mantené a tu perro con correa en áreas comunes y recogé sus deposiciones inmediatamente (por higiene vecinal y normativa ambiental de Santa Catarina).</span>
+        </div>
       </div>
     </div>
 
-    <!-- 8. NORMAS DE CONVIVENCIA Y COEXISTENCIA -->
+    <!-- 6. CHECKLIST DE CHECK-OUT -->
     <div class="card card-custom">
       <div class="card-header-custom">
-        <i class="bi bi-shield-lock text-primary"></i> <span data-i18n="rules_title">5. Normas de Convivencia</span>
-      </div>
-      <div class="card-body-custom small text-muted">
-        <ul class="mb-0 ps-3">
-          <li class="mb-2"><strong data-i18n="r1_t">Horario de Silencio:</strong> <span data-i18n="r1_d">22:00 a 08:00 hs. Respetamos el descanso de todas las familias.</span></li>
-          <li class="mb-2"><strong data-i18n="r2_t">Espacio Libre de Humo:</strong> <span data-i18n="r2_d">Prohibido fumar dentro de los contenedores.</span></li>
-          <li class="mb-2"><strong data-i18n="r3_t">Cocheras:</strong> <span data-i18n="r3_d">1 vehículo asignado por loft en el sector delimitado.</span></li>
-          <li><strong data-i18n="r4_t">Mascotas:</strong> <span data-i18n="r4_d">Circular siempre con correa en áreas comunes y recoger sus necesidades.</span></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 9. CHECKLIST DE SALIDA (CHECK-OUT) -->
-    <div class="card card-custom">
-      <div class="card-header-custom">
-        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_title">6. Checklist de Salida (Hasta las 10:00 hs)</span>
+        <i class="bi bi-check2-circle text-primary"></i> <span data-i18n="chk_t">6. Checklist de Salida (Hasta las 10:00 hs)</span>
       </div>
       <div class="card-body-custom">
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c1">
-          <label class="form-check-label small" for="c1" data-i18n="chk_1">Aire acondicionado y luces apagados</label>
+          <label class="form-check-label small" for="c1" data-i18n="c1">Apagar el aire acondicionado y todas las luces</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c2">
-          <label class="form-check-label small" for="c2" data-i18n="chk_2">Canillas cerradas y ducha sin gotear</label>
+          <label class="form-check-label small" for="c2" data-i18n="c2">Verificar que las canillas y duchas queden bien cerradas</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c3">
-          <label class="form-check-label small" for="c3" data-i18n="chk_3">Basura retirada y depositada en cesto exterior</label>
+          <label class="form-check-label small" for="c3" data-i18n="c3">Cerrar bien todas las ventanas del loft</label>
         </div>
         <div class="form-check mb-2">
           <input class="form-check-input" type="checkbox" id="c4">
-          <label class="form-check-label small" for="c4" data-i18n="chk_4">Cuentas de Netflix / Streaming deslogueadas de la TV</label>
+          <label class="form-check-label small" for="c4" data-i18n="c4">Retirar la basura y depositarla en los cestos exteriores</label>
+        </div>
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="c5">
+          <label class="form-check-label small" for="c5" data-i18n="c5">Cerrar sesión de tus cuentas de Netflix/streaming en el Smart TV</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="c5">
-          <label class="form-check-label small" for="c5" data-i18n="chk_5">Llaves dejadas sobre la mesa o entregadas al anfitrión</label>
+          <input class="form-check-input" type="checkbox" id="c6">
+          <label class="form-check-label small" for="c6" data-i18n="c6">Entregar las llaves al anfitrión o depositarlas en el punto coordinado</label>
         </div>
       </div>
     </div>
 
-    <!-- 10. CONTACTO Y ASISTENCIA DIRECTA WHATSAPP -->
+    <!-- 7. RESEÑAS, MAPS Y SUGERENCIAS ANÓNIMAS -->
+    <div class="card card-custom p-3 border-0 shadow-sm text-center">
+      <h6 class="fw-bold mb-1" data-i18n="feedback_t">Tu opinión nos ayuda a mejorar</h6>
+      <p class="small text-muted mb-3" data-i18n="feedback_d">¿Disfrutaste tu descanso en Residencial Corujão? Calificanos en Google Maps o dejanos una sugerencia 100% anónima para los anfitriones.</p>
+      
+      <div class="d-flex flex-column gap-2">
+        <button onclick="abrirResenas()" class="btn btn-outline-warning text-dark py-2 rounded-pill fw-bold" style="font-size: 0.85rem;">
+          <i class="bi bi-star-fill text-warning"></i> <span data-i18n="btn_review">Dejanos tu Reseña 5 Estrellas en Google</span>
+        </button>
+        <button onclick="abrirSugerencias()" class="btn btn-outline-secondary py-2 rounded-pill" style="font-size: 0.82rem;">
+          <i class="bi bi-envelope-heart"></i> <span data-i18n="btn_anon">Enviar Sugerencia Anónima a los Anfitriones</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 8. SITIO WEB Y REDES SOCIALES -->
+    <div class="card card-custom p-3 text-center border-0">
+      <h6 class="fw-bold small mb-2 text-muted" data-i18n="social_t">Conectá con nosotros</h6>
+      <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <a href="https://sites.google.com/view/rentalready" target="_blank" class="btn btn-sm btn-outline-dark rounded-pill px-3">
+          <i class="bi bi-globe"></i> <span data-i18n="btn_web">Sitio Web Oficial</span>
+        </a>
+        <a href="https://www.instagram.com/estacionamiento_corujao/" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+          <i class="bi bi-instagram"></i> Instagram
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61596299109713" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+          <i class="bi bi-facebook"></i> Facebook
+        </a>
+      </div>
+    </div>
+
+    <!-- 9. CONTACTO DIRECTO CON ADMINISTRACIÓN -->
     <div class="card card-custom p-3 text-center border-0 shadow-sm">
-      <span class="small text-muted mb-2 d-block" data-i18n="wa_prompt">¿Necesitás comunicarte con los anfitriones del predio?</span>
-      <button onclick="abrirWhatsApp()" class="btn btn-action py-2 px-4">
-        <i class="bi bi-whatsapp"></i> <span data-i18n="wa_btn">Hablar con el Anfitrión</span>
+      <span class="small text-muted mb-2 d-block" data-i18n="wa_prompt">¿Dudas operativas, mantenimiento o asistencia en tu loft?</span>
+      <button onclick="abrirWhatsApp()" class="btn btn-action py-2 px-4 rounded-pill">
+        <i class="bi bi-whatsapp"></i> <span data-i18n="wa_btn">Hablar con la Administración</span>
       </button>
-      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;" data-i18n="wa_hosts">
-        Atención presencial: Martín, María, Juan Martín y Marcos
+      <span class="small text-muted d-block mt-2" style="font-size: 0.72rem;">
+        Anfitriones: Marcos Oliveira y equipo de atención in-situ
       </span>
     </div>
 
     <!-- FOOTER INSTITUCIONAL -->
     <div class="text-center mt-4">
       <p class="text-muted mb-0" style="font-size: 0.75rem;">
-        <span data-i18n="footer_text">Infraestructura Operativa y Digital provista por</span> <strong>Rental Ready</strong><br>
-        <em data-i18n="footer_sub">Menos confusión. Más control.</em>
+        Conserje Digital Certificado por <strong>Rental Ready</strong><br>
+        <em>Menos consultas. Más control.</em>
       </p>
     </div>
 
   </div>
 
-  <!-- DICCIONARIO TRILINGÜE, CLIMA & ENLACES -->
+  <!-- DICCIONARIO TRILINGÜE, CLIMA & LÓGICA -->
   <script>
     let currentLang = 'es';
 
+    const wifiData = {
+      "01": { ssid: "Lagoinha do Norte", pass: "corujao01" },
+      "02": { ssid: "Brava", pass: "corujao02" },
+      "03": { ssid: "Ponta das Canas", pass: "corujao03" },
+      "04": { ssid: "Cachoeira do Bom Jesus", pass: "corujao04" },
+      "05": { ssid: "Canasvieiras", pass: "corujao05" },
+      "06": { ssid: "Santinho", pass: "corujao06" },
+      "07": { ssid: "Ingleses", pass: "corujao07" },
+      "08": { ssid: "Gaivotas", pass: "corujao08" },
+      "09": { ssid: "Moçambique", pass: "corujao09" },
+      "10": { ssid: "Jurerê", pass: "corujao10" },
+      "11": { ssid: "Daniela", pass: "corujao11" }
+    };
+
     const translations = {
       es: {
-        hero_t: "¡Hola! Soy tu Conserje Digital!",
-        hero_s: "Lagoinha do Norte · Florianópolis",
-        badge_offline: "Guía Inteligente Offline",
-        wifi_title: "1. Tu Conexión Wi-Fi Dedicada",
-        wifi_select_label: "Seleccioná tu contenedor o sector:",
-        wifi_ssid_label: "Nombre de Red (SSID):",
-        wifi_pass_label: "Contraseña:",
-        wifi_btn_copy: "Copiar Contraseña",
+        badge_node: "Alojamiento Verificado Rental Ready",
+        hero_t: "¡Hola! ¡Soy tu Conserje Digital! 🌴✨",
+        hero_s: "Residencial Corujão · Lofts a 80m del Mar · Florianópolis",
+        welcome_t: "¡Bienvenidos a tu loft en Praia da Lagoinha!",
+        welcome_d: "Tu descanso empieza ahora. Diseñamos este conserje para darte total autonomía: claves, recomendaciones, pronósticos y respuestas inmediatas durante toda tu estadía.",
+        wifi_t: "1. Conexión Wi-Fi de Fibra de tu Unidad",
+        wifi_desc: "Nuestros lofts están construidos en contenedores marítimos modernos con aislación termoacústica blindada. Para asegurar máxima estabilidad y velocidad sin interferencias, cada unidad cuenta con su propio router de fibra óptica independiente.",
+        wifi_select_l: "Seleccioná tu número de Loft / Kitnet:",
+        wifi_current_net: "Red de tu Loft:",
+        wifi_pass_l: "Contraseña:",
+        wifi_btn: "Copiar Contraseña",
         wifi_copied: "Contraseña copiada al portapapeles: ",
-        wifi_note: "💡 La estructura de contenedor marítimo cuenta con excelente aislación termoacústica; cada loft posee su propio router para máxima velocidad de fibra óptica.",
+        work_badge: "Apto Workation · Sello Workation Ready",
+        work_cert: "Certificación Rental Ready",
+        work_desc: "Significa que fue verificada la estabilidad de la conexión, la latencia, el entorno eléctrico y las condiciones básicas para trabajar remoto. No garantiza velocidad extrema, pero sí una experiencia estable y confiable.",
+        work_test: "Conectividad testeada 16/10/2026",
         weather_loading: "Cargando clima en vivo...",
-        equip_title: "2. Uso del Loft y Equipamiento",
-        ac_title: "Aire Acondicionado",
-        ac_desc: "Usar con puertas y ventanas cerradas. Al salir a la playa, apagarlo para cuidar el consumo y evitar sobrecargas eléctricas.",
-        shower_title: "Ducha y Agua Caliente",
-        shower_desc: "En el predio disponemos de ducha exterior fría para quitarse la arena antes de ingresar al contenedor.",
-        beach_title: "Sillas y Sombrilla de Playa",
-        beach_desc: "Cada loft incluye sillas y sombrilla asignadas con el logo del complejo. Al regresar de la playa, enjuagarlas en la canilla exterior y dejarlas en su espacio.",
-        cooler_title: "Beneficio Cooler de Playa",
-        cooler_desc: "Consumiendo tus bebidas en el Minimercado Corujão (dentro del complejo), podés pedir una conservadora/cooler prestada sin costo para tus bebidas frías en la playa.",
-        guide_title: "3. Guía de Servicios Locales",
-        bakery_title: "🥖 Panadería 'La Colmena'",
-        bakery_desc: "A 3 cuadras a pie · Pan caliente a partir de las 08:00 hs",
-        meat_title: "🥩 Carnicería & Minimarket",
-        meat_desc: "Cortes para asado, carbón, hielo y bebidas Minimercado Corujão (dentro del complejo).",
-        rancho_title: "🦐 Restaurante Rancho Do Pescador Lagoinha",
-        rancho_desc: "A 1 minuto a pie en la playa. Te encontrarás con el 🏆 MELHOR RESTAURANTE DE FRUTOS DO MAR DE FLORIPA ⚓ donde podrás disfrutar de sus riquísimos platos.",
-        bus_title: "🚌 Transporte al Centro de Florianópolis",
-        bus_desc: "Parada a 50 metros. Línea 1122 Executivo Praia Brava directo al centro.",
-        badge_walk: "A pie",
-        badge_inside: "Complejo",
-        badge_door: "50 metros",
-        emerg_title: "Alertas y Monitoreo Costero",
-        bulletin_tag: "Boletín del Día",
-        bulletin_text: "Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.",
-        emerg_upa: "UPA Norte (Canasvieiras):",
-        emerg_police: "Policía Militar:",
-        emerg_fire: "Bomberos:",
-        extra_title: "4. Tu Estadía Perfecta en Lagoinha",
-        sea_t: "Mar Calmo y Familiar:",
-        sea_d: "Lagoinha do Norte es ideal para niños gracias a su agua cristalina y poco oleaje.",
-        pharm_t: "Farmacia de Turno:",
-        pharm_d: "En Ponta das Canas (a 1.2 km). Delivery disponible por WhatsApp.",
-        btn_review: "¿Disfrutaste tu estadía? Dejanos tu reseña 5 Estrellas",
-        rules_title: "5. Normas de Convivencia",
-        r1_t: "Horario de Silencio:",
-        r1_d: "22:00 a 08:00 hs. Respetamos el descanso de todas las familias.",
-        r2_t: "Espacio Libre de Humo:",
-        r2_d: "Prohibido fumar dentro de los contenedores.",
-        r3_t: "Cocheras:",
-        r3_d: "1 vehículo asignado por loft en el sector delimitado.",
-        r4_t: "Mascotas:",
-        r4_d: "Circular siempre con correa en áreas comunes y recoger sus necesidades.",
-        chk_title: "6. Checklist de Salida (Hasta las 10:00 hs)",
-        chk_1: "Aire acondicionado y luces apagados",
-        chk_2: "Canillas cerradas y ducha sin gotear",
-        chk_3: "Basura retirada y depositada en cesto exterior",
-        chk_4: "Cuentas de Netflix / Streaming deslogueadas de la TV",
-        chk_5: "Llaves dejadas sobre la mesa o entregadas al anfitrión",
-        wa_prompt: "¿Necesitás comunicarte con los anfitriones del predio?",
-        wa_btn: "Hablar con el Anfitrión",
-        wa_hosts: "Atención presencial: Martín, María, Juan Martín y Marcos",
-        footer_text: "Infraestructura Operativa y Digital provista por",
-        footer_sub: "Menos confusión. Más control.",
-        wa_msg: "¡Hola! Me comunico desde el Conserje Digital de Residencial Corujão ("
+        beach_card_t: "Alertas y Monitoreo Costero",
+        beach_card_s: "Boletín Oficial del Día",
+        boletin_t: "Boletín del Día:",
+        boletin_d: "Condiciones normales de playa. Agua apta para baño según monitoreo IMA. Viento suave.",
+        beach_btn: "Consultar Balneabilidad Oficial IMA",
+        emerg_t: "Central de Emergencias y Salud",
+        loft_t: "2. Uso del Loft y Equipamiento Particular",
+        cooler_t: "🎁 Beneficio Exclusivo: Cooler para la Playa",
+        cooler_d: "Consumiendo tus bebidas en el Minimercado Corujão (al lado del complejo), podés pedir un cooler prestado sin costo para llevar tus latas y hielo bien fríos directo a la arena.",
+        ac_t: "Aire Acondicionado & Eficiencia:",
+        ac_d: "Para un rendimiento óptimo y por compromiso ambiental, mantener puertas y ventanas cerradas mientras esté encendido. Por favor apagarlo al salir a la playa para evitar sobrecargas y derroche de energía innecesario.",
+        wind_t: "Alerta Viento Sur (Ventanas):",
+        wind_d: "Si tu unidad cuenta con ventana en el baño orientada al sur (lofts familiares) y salís del loft o se avecina tormenta, recordá dejarla cerrada; el viento sur en la costa puede provocar fuertes golpes de aire o ingreso de lluvia.",
+        shower_t: "Ducha Externa Post-Playa:",
+        shower_d: "En el predio disponemos de ducha externa para quitarse la arena antes de ingresar al loft, manteniendo el interior fresco y limpio.",
+        beach_gear_t: "Equipamiento de Playa Libre:",
+        beach_gear_d: "Cada loft cuenta con sombrilla y reposeras con el logo de Residencial Corujão para que lleves cómodamente a la orilla del mar.",
+        dry_t: "Ténder y Ropa Mojada:",
+        dry_d: "Colgar toallas y mallas en el ténder individual asignado en el exterior del contenedor. Por estética y orden común, no se permite colgar ropa en barandas visibles.",
+        serv_t: "3. Guía de Servicios y Comercios Locales",
+        mini_t: "Minimercado & Cafetería Corujão (En el predio)",
+        mini_d: "A solo 30 m de tu puerta: café de cortesía, pan recién horneado a la mañana, bebidas frías, hielo, carbón, leña y cortes de carne seleccionados para tu asado.",
+        rancho_t: "Rancho Do Pescador Lagoinha (A 1 min a pie)",
+        rancho_d: "Frente al mar en la bajada de la playa. 🏆 Galardonado como el mejor restaurante de mariscos y pescado fresco de Florianópolis.",
+        transp_t: "Transporte Público y Movilidad",
+        transp_d: "Parada de colectivo a 50 metros. La línea 1122 Executivo Praia Brava te lleva directo y con aire acondicionado al centro de Florianópolis. Cobertura total de Uber con parcería Rental Ready para atención preferencial en temporada alta.",
+        stay_t: "4. Tu Estadía Perfecta en Lagoinha",
+        sun_t: "☀️ ¿Día de Sol?:",
+        sun_d: "¡Playa, playa y más playa! Lagoinha do Norte está a 50m: agua cristalina, cálida, sin olas y perfecta para familias. Bajás con tus reposeras, sombrilla y el cooler del Minimercado.",
+        night_t: "🌙 ¿Por la Noche?:",
+        night_d: "Dar una vuelta por el centro de Ponta das Canas (1.2 km), el polo gastronómico y comercial de Canasvieiras (10 min en auto), la vida nocturna de Ingleses o cenar en los sofisticados bistrós de Jurerê Internacional.",
+        rain_t: "🌧️ ¿Día Nublado o de Lluvia?:",
+        rain_d: "Ideal para recorrer el Centro Histórico de Florianópolis (Mercado Público y Casa da Alfândega), pasear por los Shoppings (Villa Romana o Beiramar), deleitarte con la ruta gastronómica de Santo Antônio de Lisboa o hacer una escapada de compras a Balneário Camboriú (a 1 hora por BR-101).",
+        rules_t: "5. Normas de Convivencia y Armonía",
+        r_quiet_t: "🔇 Horario de Silencio Estricto (22:00 a 08:00 hs):",
+        r_quiet_d: "Respeto mutuo entre lofts. Prohibido el uso de altavoces, parlantes bluetooth o música con volumen alto en áreas comunes y dentro de las unidades en este horario.",
+        r_smoke_t: "🚭 Espacio 100% Libre de Humo:",
+        r_smoke_d: "Terminantemente prohibido fumar dentro de los lofts. Si fumas en el exterior, utiliza cenicero y no arrojes colillas en el predio.",
+        r_park_t: "🚗 Cochera Privada:",
+        r_park_d: "Cada unidad cuenta con un lugar asignado frente a su contenedor. Respetar la dársena para permitir la cómoda maniobra de los demás vehículos.",
+        r_pets_t: "🐾 Mascotas con Responsabilidad:",
+        r_pets_d: "Mantené a tu perro con correa en áreas comunes y recogé sus deposiciones inmediatamente (por higiene vecinal y normativa ambiental de Santa Catarina).",
+        chk_t: "6. Checklist de Salida (Hasta las 10:00 hs)",
+        c1: "Apagar el aire acondicionado y todas las luces",
+        c2: "Verificar que las canillas y duchas queden bien cerradas",
+        c3: "Cerrar bien todas las ventanas del loft",
+        c4: "Retirar la basura y depositarla en los cestos exteriores",
+        c5: "Cerrar sesión de tus cuentas de Netflix/streaming en el Smart TV",
+        c6: "Entregar las llaves al anfitrión o depositarlas en el punto coordinado",
+        feedback_t: "Tu opinión nos ayuda a mejorar",
+        feedback_d: "¿Disfrutaste tu descanso en Residencial Corujão? Calificanos en Google Maps o dejanos una sugerencia 100% anónima para los anfitriones.",
+        btn_review: "Dejanos tu Reseña 5 Estrellas en Google",
+        btn_anon: "Enviar Sugerencia Anónima a los Anfitriones",
+        social_t: "Conectá con nosotros",
+        btn_web: "Sitio Web Oficial",
+        wa_prompt: "¿Dudas operativas, mantenimiento o asistencia en tu loft?",
+        wa_btn: "Hablar con la Administración",
+        wa_msg: "¡Hola! Estoy alojado en Residencial Corujão y me comunico a través del Conserje Digital."
       },
       pt: {
-        hero_t: "Olá! Sou seu Concierge Digital!",
-        hero_s: "Lagoinha do Norte · Florianópolis",
-        badge_offline: "Guia Inteligente Offline",
-        wifi_title: "1. Sua Conexão Wi-Fi Dedicada",
-        wifi_select_label: "Selecione seu contêiner ou setor:",
-        wifi_ssid_label: "Nome da Rede (SSID):",
-        wifi_pass_label: "Senha:",
-        wifi_btn_copy: "Copiar Senha",
-        wifi_copied: "Senha copiada para a área de transferência: ",
-        wifi_note: "💡 A estrutura de contêiner marítimo conta com excelente isolamento termoacústico; cada loft possui seu próprio roteador para máxima velocidade de fibra óptica.",
+        badge_node: "Hospedagem Verificada Rental Ready",
+        hero_t: "Olá! Sou seu Concierge Digital! 🌴✨",
+        hero_s: "Residencial Corujão · Lofts a 80m do Mar · Florianópolis",
+        welcome_t: "Bem-vindos ao seu loft na Praia da Lagoinha!",
+        welcome_d: "Seu descanso começa agora. Criamos este concierge para total autonomia: senhas, dicas locais, clima e atendimento ágil na sua estadia.",
+        wifi_t: "1. Conexão Wi-Fi Fibra da sua Unidade",
+        wifi_desc: "Nossos lofts são construídos em containers marítimos com isolamento termoacústico blindado. Para garantir estabilidade máxima e velocidade sem oscilações, cada unidade possui seu próprio roteador de fibra óptica dedicado.",
+        wifi_select_l: "Selecione o número do seu Loft / Kitnet:",
+        wifi_current_net: "Rede do seu Loft:",
+        wifi_pass_l: "Senha:",
+        wifi_btn: "Copiar Senha",
+        wifi_copied: "Senha copiada: ",
+        work_badge: "Apto Workation · Selo Workation Ready",
+        work_cert: "Certificação Rental Ready",
+        work_desc: "Significa que foi verificada a estabilidade da conexão, latência, rede elétrica e condições básicas para trabalho remoto confiável.",
+        work_test: "Conectividade testada 16/10/2026",
         weather_loading: "Carregando clima ao vivo...",
-        equip_title: "2. Uso do Loft e Equipamentos",
-        ac_title: "Ar-Condicionado",
-        ac_desc: "Utilizar com portas e janelas fechadas. Ao sair para a praia, desligue para economizar energia e evitar sobrecargas.",
-        shower_title: "Chuveiro e Água Quente",
-        shower_desc: "No pátio temos chuveirão externo frio para retirar a areia antes de entrar no loft.",
-        beach_title: "Cadeiras e Guarda-Sol de Praia",
-        beach_desc: "Cada loft conta com cadeiras e guarda-sol designados com o logotipo do residencial. Ao retornar, enxágue na torneira externa.",
-        cooler_title: "Benefício Caixa Térmica / Cooler",
-        cooler_desc: "Consumindo suas bebidas no Minimercado Corujão (dentro do complexo), você pode pedir uma caixa térmica/cooler emprestada sem custo para levar à praia.",
-        guide_title: "3. Guia de Serviços Locais",
-        bakery_title: "🥖 Padaria 'La Colmena'",
-        bakery_desc: "A 3 quadras a pé · Pão quente a partir das 08:00 hs",
-        meat_title: "🥩 Casa de Carnes & Minimercado",
-        meat_desc: "Carnes para churrasco, carvão, gelo e bebidas Minimercado Corujão (dentro do complexo).",
-        rancho_title: "🦐 Restaurante Rancho Do Pescador Lagoinha",
-        rancho_desc: "A 1 minuto a pé na praia. Você encontrará o 🏆 MELHOR RESTAURANTE DE FRUTOS DO MAR DE FLORIPA ⚓ para saborear pratos incríveis.",
-        bus_title: "🚌 Transporte para o Centro de Florianópolis",
-        bus_desc: "Ponto a 50 metros. Linha 1122 Executivo Praia Brava direto ao centro.",
-        badge_walk: "A pé",
-        badge_inside: "Complexo",
-        badge_door: "50 metros",
-        emerg_title: "Alertas e Monitoramento Costeiro",
-        bulletin_tag: "Boletim do Dia",
-        bulletin_text: "Condições normais de praia. Água própria para banho segundo o IMA. Vento suave.",
-        emerg_upa: "UPA Norte (Canasvieiras):",
-        emerg_police: "Polícia Militar:",
-        emerg_fire: "Bombeiros:",
-        extra_title: "4. Sua Estadia Perfeita em Lagoinha",
-        sea_t: "Mar Calmo e Familiar:",
-        sea_d: "A Praia da Lagoinha é perfeita para crianças com águas tranquilas e cristalinas.",
-        pharm_t: "Farmácia de Plantão:",
-        pharm_d: "Em Ponta das Canas (a 1.2 km). Atendimento e entrega via WhatsApp.",
-        btn_review: "Gostou da estadia? Deixe sua avaliação 5 Estrelas no Google",
-        rules_title: "5. Regras de Convivência",
-        r1_t: "Horário de Silêncio:",
-        r1_d: "22:00 às 08:00 hs. Respetamos o descanso de todas as famílias.",
-        r2_t: "Ambiente Livre de Cigarro:",
-        r2_d: "Estritamente proibido fumar dentro dos lofts/contêineres.",
-        r3_t: "Estacionamento:",
-        r3_d: "1 veículo por loft na vaga delimitada.",
-        r4_t: "Animais de Estimação:",
-        r4_d: "Circular sempre com coleira nas áreas comuns e recolher os dejetos.",
-        chk_title: "6. Checklist de Saída (Até as 10:00 hs)",
-        chk_1: "Ar-condicionado e luzes desligados",
-        chk_2: "Torneiras fechadas e chuveiro sem pingar",
-        chk_3: "Lixo retirado e depositado na lixeira externa",
-        chk_4: "Contas de streaming/Netflix desconectadas da Smart TV",
-        chk_5: "Chaves deixadas sobre a mesa ou entregues ao anfitrião",
-        wa_prompt: "Precisa falar com os anfitriões do espaço?",
-        wa_btn: "Falar com o Anfitrião",
-        wa_hosts: "Atendimento presencial: Martín, María, Juan Martín e Marcos",
-        footer_text: "Infraestrutura Operacional e Digital fornecida por",
-        footer_sub: "Menos confusão. Mais controle.",
-        wa_msg: "Olá! Estou entrando em contato através do Concierge Digital do Residencial Corujão ("
+        beach_card_t: "Alertas e Monitoramento Costeiro",
+        beach_card_s: "Boletim Oficial do Dia",
+        boletin_t: "Boletim do Dia:",
+        boletin_d: "Condições normais de praia. Água própria para banho segundo relatório IMA. Vento suave.",
+        beach_btn: "Consultar Balneabilidade Oficial IMA",
+        emerg_t: "Central de Emergência e Saúde",
+        loft_t: "2. Uso do Loft e Equipamentos",
+        cooler_t: "🎁 Benefício Exclusivo: Cooler para a Praia",
+        cooler_d: "Consumindo bebidas no Minimercado Corujão (ao lado do residencial), você pode retirar um cooler emprestado gratuitamente para levar para a praia.",
+        ac_t: "Ar-Condicionado & Eficiência:",
+        ac_d: "Para melhor desempenho e cuidado ambiental, mantenha portas e janelas fechadas com o ar ligado. Desligue ao sair para a praia.",
+        wind_t: "Alerta Vento Sul (Janelas):",
+        wind_d: "Se o seu loft possui janela no banheiro voltada ao sul (unidades de 2 quartos) e for sair, mantenha fechada para evitar rajadas e entrada de chuva.",
+        shower_t: "Ducha Externa Pós-Praia:",
+        shower_d: "Dispomos de ducha fria externa para tirar a areia antes de entrar no loft, preservando o conforto interno.",
+        beach_gear_t: "Estrutura de Praia Inclusa:",
+        beach_gear_d: "Cada loft possui guarda-sol e cadeiras identificadas com a marca do Residencial Corujão para levar à praia.",
+        dry_t: "Varal e Roupas Molhadas:",
+        dry_d: "Utilize o varal individual externo do seu container. Proibido pendurar roupas nas grades frontais visíveis.",
+        serv_t: "3. Serviços e Comércios Locais",
+        mini_t: "Minimercado & Café Corujão (No complexo)",
+        mini_d: "A 30m da sua porta: café matinal, pão quentinho, bebidas geladas, gelo, carvão e carnes selecionadas para churrasco.",
+        rancho_t: "Rancho Do Pescador Lagoinha (A 1 min a pé)",
+        rancho_d: "Na beira da praia. 🏆 Eleito o melhor restaurante de frutos do mar de Floripa.",
+        transp_t: "Transporte e Mobilidade",
+        transp_d: "Ponto de ônibus a 50m com a linha 1122 Executivo Praia Brava até o centro. Atendimento rápido de motoristas de aplicativo.",
+        stay_t: "4. Sua Estadia Perfeita em Lagoinha",
+        sun_t: "☀️ Dia de Sol?:",
+        sun_d: "Praia, praia e mais praia! Lagoinha fica a 50m: águas calmas, quentes e cristalinas. Desça com cadeiras, guarda-sol e o cooler emprestado.",
+        night_t: "🌙 À Noite?:",
+        night_d: "Passeie pelo centrinho de Ponta das Canas (1.2 km), o polo de Canasvieiras (10 min de carro) ou jante nos bistrôs de Jurerê Internacional.",
+        rain_t: "🌧️ Dia Nublado ou de Chuva?:",
+        rain_d: "Passeie pelo Centro Histórico de Floripa (Mercado Público), visite os Shoppings (Villa Romana/Beiramar), a rota gastronômica de Santo Antônio de Lisboa ou faça um bate-volta a Balneário Camboriú.",
+        rules_t: "5. Convivência e Boas Práticas",
+        r_quiet_t: "🔇 Silêncio Obrigatório (22:00 às 08:00 hs):",
+        r_quiet_d: "Respeito ao descanso alheio. Proibido caixas de som ou música alta neste horário.",
+        r_smoke_t: "🚭 Espaço 100% Livre de Fumo:",
+        r_smoke_d: "Terminantemente proibido fumar dentro dos lofts.",
+        r_park_t: "🚗 Vaga de Garagem:",
+        r_park_d: "Uma vaga exclusiva em frente ao container. Mantenha o veículo alinhado.",
+        r_pets_t: "🐾 Pets com Responsabilidade:",
+        r_pets_d: "Sempre na guia nas áreas comuns e recolha os dejetos imediatamente.",
+        chk_t: "6. Checklist de Saída (Até as 10:00 hs)",
+        c1: "Desligar o ar-condicionado e as luzes",
+        c2: "Conferir se todas as torneiras e chuveiro estão bem fechados",
+        c3: "Fechar todas as janelas do loft",
+        c4: "Recolher o lixo e depositar nas lixeiras externas",
+        c5: "Fazer logout de contas de streaming na Smart TV",
+        c6: "Entregar a chave aos anfitriões conforme combinado",
+        feedback_t: "Sua avaliação é importante",
+        feedback_d: "Gostou da estadia no Residencial Corujão? Deixe sua nota 5 estrelas no Google ou envie uma sugestão anônima.",
+        btn_review: "Deixar Avaliação 5 Estrelas no Google",
+        btn_anon: "Enviar Sugestão Anônima aos Anfitriões",
+        social_t: "Conecte-se conosco",
+        btn_web: "Site Oficial",
+        wa_prompt: "Dúvidas operacionais ou suporte no seu loft?",
+        wa_btn: "Falar com a Administração",
+        wa_msg: "Olá! Estou hospedado no Residencial Corujão e estou entrando em contato pelo Concierge Digital."
       },
       en: {
-        hero_t: "Hello! I'm your Digital Concierge!",
-        hero_s: "Lagoinha do Norte · Florianópolis",
-        badge_offline: "Offline Smart Guide",
-        wifi_title: "1. Your Dedicated Wi-Fi Connection",
-        wifi_select_label: "Select your container or area:",
-        wifi_ssid_label: "Network Name (SSID):",
-        wifi_pass_label: "Password:",
-        wifi_btn_copy: "Copy Password",
-        wifi_copied: "Password copied to clipboard: ",
-        wifi_note: "💡 Container architecture offers outstanding thermal and acoustic insulation; each loft features its own router for maximum fiber-optic speed.",
+        badge_node: "Verified Rental Ready Accommodation",
+        hero_t: "Hello! I am your Digital Concierge! 🌴✨",
+        hero_s: "Residencial Corujão · Lofts 80m from the Beach · Florianópolis",
+        welcome_t: "Welcome to your loft at Lagoinha Beach!",
+        welcome_d: "Your vacation starts now. We designed this digital concierge for total independence: Wi-Fi credentials, house tips, weather updates, and fast help.",
+        wifi_t: "1. Dedicated Fiber Wi-Fi for your Unit",
+        wifi_desc: "Our lofts are built from modern shipping containers with shielded thermo-acoustic insulation. To guarantee top speeds and stability, every unit features its own dedicated fiber router.",
+        wifi_select_l: "Select your Loft / Kitnet number:",
+        wifi_current_net: "Your Loft Network:",
+        wifi_pass_l: "Password:",
+        wifi_btn: "Copy Password",
+        wifi_copied: "Password copied: ",
+        work_badge: "Workation Certified · Workation Ready Badge",
+        work_cert: "Rental Ready Certification",
+        work_desc: "Network stability, latency, electrical supply, and basic remote work setup thoroughly verified for seamless remote working.",
+        work_test: "Tested on 10/16/2026",
         weather_loading: "Loading live weather...",
-        equip_title: "2. Loft Amenities & Equipment",
-        ac_title: "Air Conditioning",
-        ac_desc: "Use with doors and windows closed. Please turn it off when heading to the beach to save energy and prevent overload.",
-        shower_title: "Electric Shower & Hot Water",
-        shower_desc: "An outdoor cold shower is available in the yard to rinse off sand before entering your container.",
-        beach_title: "Beach Chairs & Umbrella",
-        beach_desc: "Each loft includes assigned gear branded with the resort logo. Please rinse with the outdoor tap upon returning.",
-        cooler_title: "Beach Cooler Courtesy",
-        cooler_desc: "Purchasing drinks at Minimercado Corujão (inside the resort), you can borrow a cooler ice box free of charge for the beach.",
-        guide_title: "3. Local Guide & Trusted Spots",
-        bakery_title: "🥖 'La Colmena' Bakery",
-        bakery_desc: "3 blocks away on foot · Fresh warm bread starting at 8:00 AM",
-        meat_title: "🥩 Butcher Shop & Market",
-        meat_desc: "BBQ cuts, charcoal, ice, and drinks at Minimercado Corujão (inside the resort).",
-        rancho_title: "🦐 Rancho Do Pescador Restaurant",
-        rancho_desc: "1 minute walk on the beach. Enjoy the 🏆 BEST SEAFOOD RESTAURANT IN FLORIPA ⚓ with delightful dishes.",
-        bus_title: "🚌 Transit to Downtown Florianópolis",
-        bus_desc: "Bus stop 50 meters away. Line 1122 Executivo Praia Brava straight to downtown.",
-        badge_walk: "Walking",
-        badge_inside: "On site",
-        badge_door: "50 meters",
-        emerg_title: "Alerts & Coastal Monitoring",
-        bulletin_tag: "Daily Bulletin",
-        bulletin_text: "Pleasant beach conditions. Water suitable for bathing according to IMA. Gentle breeze.",
-        emerg_upa: "North Emergency Room (UPA Canasvieiras):",
-        emerg_police: "Police Department:",
-        emerg_fire: "Firefighters / Rescue:",
-        extra_title: "4. Your Perfect Stay in Lagoinha",
-        sea_t: "Calm & Family-Friendly Waters:",
-        sea_d: "Lagoinha do Norte features crystal-clear, calm waters perfect for kids.",
-        pharm_t: "Pharmacy on Duty:",
-        pharm_d: "In Ponta das Canas (1.2 km away). WhatsApp delivery available.",
-        btn_review: "Enjoying your stay? Leave us a 5-Star Review on Google",
-        rules_title: "5. House Rules",
-        r1_t: "Quiet Hours:",
-        r1_d: "10:00 PM to 08:00 AM. We respect peaceful rest for all families.",
-        r2_t: "Smoke-Free Space:",
-        r2_d: "Strictly non-smoking inside the container lofts.",
-        r3_t: "Parking:",
-        r3_d: "1 designated vehicle spot per loft in marked areas.",
-        r4_t: "Pets:",
-        r4_d: "Always keep pets on a leash in common areas and clean up after them.",
-        chk_title: "6. Check-out Checklist (By 10:00 AM)",
-        chk_1: "A/C and lights switched off",
-        chk_2: "Faucets turned off and shower not dripping",
-        chk_3: "Trash taken out to exterior bins",
-        chk_4: "Logged out of personal Netflix / Streaming accounts on TV",
-        chk_5: "Keys left on the table or handed to hosts",
-        wa_prompt: "Need to contact the on-site hosts?",
-        wa_btn: "Message the Host",
-        wa_hosts: "On-site team: Martín, María, Juan Martín & Marcos",
-        footer_text: "Digital & Operational Infrastructure powered by",
-        footer_sub: "Less confusion. More control.",
-        wa_msg: "Hello! I'm contacting you from the Digital Concierge at Residencial Corujão ("
+        beach_card_t: "Coastal Alerts & Monitoring",
+        beach_card_s: "Daily Official Report",
+        boletin_t: "Daily Report:",
+        boletin_d: "Normal beach conditions. Water safe for swimming according to IMA report. Light breeze.",
+        beach_btn: "Check Official IMA Beach Water Report",
+        emerg_t: "Emergency & Medical Numbers",
+        loft_t: "2. Loft Guide & Amenities",
+        cooler_t: "🎁 Exclusive Perk: Free Beach Cooler Loan",
+        cooler_d: "Buying drinks at Minimercado Corujão next door? You can borrow a beach cooler for free to keep drinks and ice chilled right on the sand.",
+        ac_t: "Air Conditioning & Eco Care:",
+        ac_d: "Keep doors and windows closed while running A/C. Please turn off when going to the beach to avoid wasting power.",
+        wind_t: "South Wind Storm Alert (Windows):",
+        wind_d: "If your loft has a south-facing bathroom window (family lofts), remember to close it before leaving. Coastal winds can cause sudden slams.",
+        shower_t: "Outdoor Beach Shower:",
+        shower_d: "Outdoor cold shower available on the grounds to rinse sand before entering your loft.",
+        beach_gear_t: "Beach Gear Included:",
+        beach_gear_d: "Each loft includes an umbrella and beach chairs with the Residencial Corujão logo for you to enjoy by the water.",
+        dry_t: "Drying Rack & Wet Clothes:",
+        dry_d: "Hang towels and swimwear on your assigned outdoor drying rack. Please do not hang items over exterior railings.",
+        serv_t: "3. Local Services & Neighborhood Guide",
+        mini_t: "Minimarket & Café Corujão (On premises)",
+        mini_d: "Just 30 meters away: fresh morning coffee, warm bread, cold beverages, ice, charcoal, and barbecue steaks.",
+        rancho_t: "Rancho Do Pescador Restaurant (1 min walk)",
+        rancho_d: "Right on the beachfront. 🏆 Awarded best fresh seafood restaurant in Florianópolis.",
+        transp_t: "Public Transit & Rideshare",
+        transp_d: "Bus stop 50 meters away (Line 1122 Executivo Praia Brava directly to downtown). Fast Uber coverage with Rental Ready priority during peak season.",
+        stay_t: "4. Your Perfect Stay in Lagoinha",
+        sun_t: "☀️ Sunny Day?:",
+        sun_d: "Beach, beach, and more beach! Lagoinha Beach is 50m away: crystal-clear, calm waters with no waves. Grab your chairs and cooler.",
+        night_t: "🌙 Night Plans?:",
+        night_d: "Explore Ponta das Canas center (1.2 km), Canasvieiras dining strip (10 min drive), nightlife in Ingleses, or dinner at Jurerê Internacional bistros.",
+        rain_t: "🌧️ Overcast or Rainy Day?:",
+        rain_d: "Perfect for downtown Floripa (Historic Market), shopping malls (Villa Romana / Beiramar), sunset dining at Santo Antônio de Lisboa, or a day trip to Balneário Camboriú.",
+        rules_t: "5. House Rules & Quiet Hours",
+        r_quiet_t: "🔇 Quiet Hours (10:00 PM to 08:00 AM):",
+        r_quiet_d: "Strict quiet hours for peaceful sleep. No loud music or bluetooth speakers during these hours.",
+        r_smoke_t: "🚭 100% Smoke-Free Indoors:",
+        r_smoke_d: "Smoking inside lofts is strictly prohibited.",
+        r_park_t: "🚗 Assigned Parking:",
+        r_park_d: "One designated parking space directly in front of each unit. Park carefully within marked bays.",
+        r_pets_t: "🐾 Responsible Pet Owners:",
+        r_pets_d: "Pets must remain on leashes in common areas. Immediate waste pickup is mandatory by local law.",
+        chk_t: "6. Check-out Checklist (By 10:00 AM)",
+        c1: "Turn off air conditioning and all lights",
+        c2: "Check that faucets and shower are tightly closed",
+        c3: "Ensure all windows are securely latched",
+        c4: "Bag trash and dispose in outdoor garbage bins",
+        c5: "Log out of personal streaming accounts on Smart TV",
+        c6: "Return keys to hosts as previously coordinated",
+        feedback_t: "Your feedback matters",
+        feedback_d: "Did you enjoy your vacation at Residencial Corujão? Leave us a 5-star Google review or send anonymous feedback to hosts.",
+        btn_review: "Leave a 5-Star Review on Google",
+        btn_anon: "Send Anonymous Feedback to Hosts",
+        social_t: "Connect with us",
+        btn_web: "Official Website",
+        wa_prompt: "Need maintenance, fresh towels, or assistance in your loft?",
+        wa_btn: "Message Management",
+        wa_msg: "Hello! I am staying at Residencial Corujão and contacting you via the Digital Concierge."
       }
     };
 
-    const wifiData = {
-      "1": { ssid: "Lagoinha do Norte", pass: "corujao01" },
-      "2": { ssid: "Brava", pass: "corujao02" },
-      "3": { ssid: "Ponta das Canas", pass: "corujao03" },
-      "4": { ssid: "Cachoeira do Bom Jesus", pass: "corujao04" },
-      "5": { ssid: "Canasvieiras", pass: "corujao05" },
-      "6": { ssid: "Santinho", pass: "corujao06" },
-      "7": { ssid: "Ingleses", pass: "corujao07" },
-      "8": { ssid: "Gaivotas", pass: "corujao08" },
-      "9": { ssid: "Moçambique", pass: "corujao09" },
-      "10": { ssid: "Jurerê", pass: "corujao10" },
-      "11": { ssid: "Daniela", pass: "corujao11" },
-      "mini": { ssid: "Minimercado Corujão", pass: "corujao12" },
-      "mh": { ssid: "PontaNorte", pass: "Chimuelo*517" }
-    };
-
-    function updateWifi() {
-      const u = document.getElementById("unitSelect").value;
-      document.getElementById("wifiSsid").innerText = wifiData[u].ssid;
-      document.getElementById("wifiPass").innerText = wifiData[u].pass;
+    function cambiarRedWifi() {
+      const selected = document.getElementById("loftSelector").value;
+      const data = wifiData[selected];
+      if (data) {
+        document.getElementById("wifiSsid").innerText = data.ssid;
+        document.getElementById("wifiPass").innerText = data.pass;
+      }
     }
 
-    function copyWifi() {
+    function copiarWifi() {
       const pass = document.getElementById("wifiPass").innerText;
       navigator.clipboard.writeText(pass);
       alert(translations[currentLang].wifi_copied + pass);
@@ -643,25 +808,38 @@
       });
     }
 
-    // Funciones de enlaces directos sin bloqueos
     function abrirWhatsApp() {
-      const tel = "5492235678263";
-      const u = document.getElementById("unitSelect").options[document.getElementById("unitSelect").selectedIndex].text;
-      const msj = encodeURIComponent(translations[currentLang].wa_msg + u + ").");
+      const tel = "5548991672660";
+      const msj = encodeURIComponent(translations[currentLang].wa_msg);
       window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
-    }
-
-    function abrirDefensaCivil() {
-      window.open("https://defesacivil.sc.gov.br/", "_blank");
     }
 
     function abrirBalneabilidade() {
       window.open("https://balneabilidade.ima.sc.gov.br/", "_blank");
     }
 
-    function abrirResenas() { // Abre la búsqueda directa en Google Maps de Residencial Corujão en Lagoinha const url = "https://www.google.com/maps/place/Pousada+Corujao/@-27.3903874,-48.4235405,94m/data=!3m1!1e3!4m22!1m10!3m9!1s0x952743eb90453e01:0x5351869655b8a0d4!2sPousada+Corujao!5m2!4m1!1i2!8m2!3d-27.3903874!4d-48.4230657!16s%2Fg%2F11yjh95h1h!3m10!1s0x952743eb90453e01:0x5351869655b8a0d4!5m2!4m1!1i2!8m2!3d-27.3903874!4d-48.4230657!9m1!1b1!16s%2Fg%2F11yjh95h1h?entry=ttu&g_ep=EgoyMDI2MTExOC4xIKXMDSoASAFQAw%3D%3D"; window.open(url, "\_blank"); }
+    function abrirResenas() {
+      window.open("https://g.page/r/CewIf3rRIO05EAI/review", "_blank");
+    }
 
-    // Clima en vivo geolocalizado en Praia da Lagoinha
+    function abrirSugerencias() {
+      const tel = "5548991672660";
+      const msj = encodeURIComponent("📝 Sugerencia anónima / Comentario constructivo para Residencial Corujão:\n\n");
+      window.open("https://api.whatsapp.com/send?phone=" + tel + "&text=" + msj, "_blank");
+    }
+
+    function handleImgError(img) {
+      if (!img.dataset.tried2) {
+        img.dataset.tried2 = "true";
+        img.src = "conserje-bg.jpg";
+      } else if (!img.dataset.tried3) {
+        img.dataset.tried3 = "true";
+        img.src = "badsn.jpg";
+      } else {
+        img.style.display = "none";
+      }
+    }
+
     async function fetchWeather() {
       try {
         const res = await fetch("[suspicious link removed]");
@@ -705,7 +883,6 @@
       } else {
         setLanguage('es');
       }
-      updateWifi();
       fetchWeather();
     });
 
